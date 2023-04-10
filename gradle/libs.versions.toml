@@ -1,5 +1,6 @@
 [versions]
-compose-bom = "2023.01.00"
+compose-bom = "2022.11.00"
+activity-compose = "1.6.1"
 material = "1.2.0"
 android-application = "7.4.2"
 android-library = "7.4.2"
@@ -19,33 +20,34 @@ java-inject = "1"
 
 [libraries]
 
-compose-bom = { group = "androidx.compose" , name= "compose-bom", version.ref = "compose-bom"}
-material = { group = "androidx.compose.material" , name= "material", version.ref = "material"}
-foundation = {group = "androidx.compose.founddation", name = "foundation"}
-core-ktx= { group ="androidx.core", name="core-ktx", version.ref="core-ktx"}
-appcompat = { group ="androidx.appcompat", name="appcompat", version.ref="appcompat"}
+compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
+activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
+foundation = { group = "androidx.compose.foundation", name = "foundation" }
+core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
+appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 
-hilt-android = {group = "com.google.dagger", name = "hilt-android", version.ref = "hilt"}
-hilt-compiler = {group = "com.google.dagger", name = "hilt-compiler", version.ref= "hilt"}
+hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
+hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 
 
-retrofit = { group = "com.squareup.retrofit2" , name = "retrofit", version.ref = "retrofit"}
-okHttp = { group = "com.squareup.okhttp3", name="okhttp", version.ref="okHttp"}
+retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
+okHttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
-java-inject = { group = "javax.inject", name ="javax.inject", version.ref ="java-inject"}
+java-inject = { group = "javax.inject", name = "javax.inject", version.ref = "java-inject" }
 
 
-junit = {group = "junit", name= "junit", version.ref="junit"}
-androidx-junit = {group ="androidx.test.ext", name= "junit", version.ref="androidx-junit"}
-androidx-espresso = { group = "androidx.test.espresso" ,name ="espresso-core", version.ref="androidx-espresso-core"}
+junit = { group = "junit", name = "junit", version.ref = "junit" }
+androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
+androidx-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
 
 [plugins]
-com-android-application = { id= "com.android.application", version.ref="android-application"}
-com-android-library = { id = "com.android.library" , version.ref = "android-library"}
-org-jetbrains-kotlin-android= { id = "org.jetbrains.kotlin.android" , version.ref = "kotlin-android"}
-org-jetbrains-kotlin-jvm= { id = "org.jetbrains.kotlin.jvm" , version.ref = "kotlin-jvm"}
+com-android-application = { id = "com.android.application", version.ref = "android-application" }
+com-android-library = { id = "com.android.library", version.ref = "android-library" }
+org-jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin-android" }
+org-jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "kotlin-jvm" }
 
-kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin"}
+kotlin-kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt-plugin = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
 
 
