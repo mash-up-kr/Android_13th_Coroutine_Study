@@ -1,6 +1,8 @@
 [versions]
 compose-bom = "2022.11.00"
 activity-compose = "1.6.1"
+ui-tooling-preview = "1.3.1"
+glide-compose = "1.0.0-alpha.1"
 material = "1.2.0"
 android-application = "7.4.2"
 android-library = "7.4.2"
@@ -22,6 +24,7 @@ java-inject = "1"
 
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
+ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "ui-tooling-preview" }
 material = { group = "androidx.compose.material", name = "material", version.ref = "material" }
 foundation = { group = "androidx.compose.foundation", name = "foundation" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
@@ -30,12 +33,12 @@ appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "a
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
 
-
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 okHttp = { group = "com.squareup.okhttp3", name = "okhttp", version.ref = "okHttp" }
 coroutine = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "coroutine" }
 java-inject = { group = "javax.inject", name = "javax.inject", version.ref = "java-inject" }
 
+glide = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide-compose" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
