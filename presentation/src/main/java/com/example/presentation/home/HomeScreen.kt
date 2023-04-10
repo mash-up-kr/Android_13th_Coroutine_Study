@@ -1,7 +1,6 @@
 package com.example.presentation.home
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -20,11 +19,11 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.example.presentation.R
+import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
+import com.bumptech.glide.integration.compose.GlideImage
 import com.example.presentation.home.model.MashUpCrew
 import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 
@@ -37,7 +36,7 @@ import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
     val studyCrewList = MashUpCrew.values().toList()
-    Column(modifier = modifier) {
+    Column(modifier = modifier.padding(8.dp)) {
         StudyCrewList(studyCrewList = studyCrewList, modifier = Modifier)
 
     }
@@ -54,6 +53,8 @@ fun StudyCrewList(
         }
     }
 }
+
+@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun StudyCrew(
     @StringRes userName: Int,
@@ -64,9 +65,9 @@ fun StudyCrew(
         horizontalAlignment = Alignment.CenterHorizontally,
         modifier = modifier.padding(8.dp)
     ) {
-        Image(
-            painter = painterResource(id = R.drawable.ic_launcher_background),
-            contentDescription = null,
+        GlideImage(
+            model = stringResource(id = imageUrl),
+            contentDescription = stringResource(id = userName),
             contentScale = ContentScale.Fit,
             modifier = Modifier
                 .size(96.dp)
