@@ -12,8 +12,7 @@ dependencyResolutionManagement {
         mavenCentral()
     }
 }
-
-rootProject.name = "My Application"
+rootProject.name = "CoroutineStudy"
 include(":app")
 include(":presentation")
 include(":domain")

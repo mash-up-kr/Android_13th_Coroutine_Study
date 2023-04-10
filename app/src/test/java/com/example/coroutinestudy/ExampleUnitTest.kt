@@ -1,4 +1,4 @@
-package com.example.coroutine_study
+package com.example.coroutinestudy
 
 import org.junit.Test
 
