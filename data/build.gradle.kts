@@ -6,19 +6,19 @@ plugins {
 }
 
 android {
-    namespace =  "com.example.data"
-    compileSdk =  33
+    namespace = "com.example.data"
+    compileSdk = 33
 
     defaultConfig {
-        minSdk  = 24
-        targetSdk =  33
+        minSdk = 24
+        targetSdk = 33
 
-        testInstrumentationRunner =  "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled  = false
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -26,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility  =   JavaVersion.VERSION_1_8
-        targetCompatibility  =  JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -41,14 +41,21 @@ dependencies {
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso)
 
+    // Retrofit with Moshi Converter
     implementation(libs.retrofit)
-    implementation(libs.okHttp)
-    implementation(libs.coroutine)
+    implementation(libs.converterMoshi)
+    implementation(libs.converterScalar)
+    implementation(libs.moshi)
+    kapt(libs.moshiCodeGen)
 
+    // OkHttp
+    implementation(libs.okHttp)
+    implementation(libs.okHttpInterceptor)
+
+    // Coroutine
+    implementation(libs.coroutine)
 
     // hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-
-
 }

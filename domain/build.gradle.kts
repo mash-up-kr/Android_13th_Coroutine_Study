@@ -9,5 +9,7 @@ java {
 }
 
 dependencies {
+    // Coroutine
     implementation(libs.coroutine)
+    implementation(libs.java.inject)
 }

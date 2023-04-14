@@ -6,12 +6,12 @@ plugins {
 }
 
 android {
-    namespace =  "com.example.coroutinestudy"
-    compileSdk  = 33
+    namespace = "com.example.coroutinestudy"
+    compileSdk = 33
 
     defaultConfig {
         applicationId = "com.example.coroutinestudy"
-        minSdk =  24
+        minSdk = 24
         targetSdk = 33
         versionCode = 1
         versionName = "1.0"
@@ -21,7 +21,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled  = false
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -29,8 +29,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility =  JavaVersion.VERSION_1_8
-        targetCompatibility =  JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -45,6 +45,7 @@ android {
 dependencies {
 
     implementation(project(":data"))
+    implementation(project(":domain"))
     implementation(project(":presentation"))
 
     implementation(libs.hilt.android)
