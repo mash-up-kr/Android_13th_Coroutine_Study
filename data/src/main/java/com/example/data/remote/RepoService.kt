@@ -1,22 +1,12 @@
 package com.example.data.remote
 
 import com.example.data.remote.response.repo.GitHubRepoResponse
-import retrofit2.await
-import javax.inject.Inject
+import retrofit2.http.GET
+import retrofit2.http.Path
 
-class RepoService @Inject constructor(
-    private val response: RepoApi,
-) {
-    suspend fun getGitHubRepoList(userName: String): List<GitHubRepoResponse> {
-        return runCatching {
-            response.getGitHubRepo(userName).await()
-        }.fold(
-            onSuccess = { repoList ->
-                repoList
-            },
-            onFailure = {
-                emptyList()
-            },
-        )
-    }
+interface RepoService {
+    @GET("/users/{username}/repos")
+    suspend fun getGitHubRepo(
+        @Path("username") userName: String,
+    ): List<GitHubRepoResponse>
 }

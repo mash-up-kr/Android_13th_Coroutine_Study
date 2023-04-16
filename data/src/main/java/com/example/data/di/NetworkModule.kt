@@ -1,8 +1,10 @@
 package com.example.data.di
 
-import com.example.data.remote.FollowerApi
-import com.example.data.remote.RepoApi
-import com.example.data.remote.UserApi
+import com.example.data.common.BASE_URL
+import com.example.data.common.TIME_OUT_POLICY
+import com.example.data.remote.FollowerService
+import com.example.data.remote.RepoService
+import com.example.data.remote.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -19,20 +21,6 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 @Module
 object NetworkModule {
-
-    @Singleton
-    @Provides
-    @TimeOutPolicy
-    fun provideConnectTimeoutPolicy(): Long {
-        return 10_000L
-    }
-
-    @Singleton
-    @Provides
-    @GitHubBaseUrl
-    fun provideGitHubBaseUrl(): String {
-        return "https://api.github.com"
-    }
 
     @Singleton
     @Provides
@@ -56,13 +44,12 @@ object NetworkModule {
     @Provides
     fun provideClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        @TimeOutPolicy connectTimeoutPolicy: Long,
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(
-                connectTimeoutPolicy,
+                TIME_OUT_POLICY,
                 TimeUnit.MILLISECONDS,
             )
             .build()
@@ -73,11 +60,10 @@ object NetworkModule {
     fun provideGitHubRepoRetrofit(
         okHttpClient: OkHttpClient,
         moshi: Moshi,
-        @GitHubBaseUrl url: String,
     ): Retrofit {
         return Retrofit
             .Builder()
-            .baseUrl(url)
+            .baseUrl(BASE_URL)
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
@@ -85,19 +71,19 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGitHubRepoService(retrofit: Retrofit): RepoApi {
-        return retrofit.create(RepoApi::class.java)
+    fun provideGitHubRepoService(retrofit: Retrofit): RepoService {
+        return retrofit.create(RepoService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideUserService(retrofit: Retrofit): FollowerApi {
-        return retrofit.create(FollowerApi::class.java)
+    fun provideUserService(retrofit: Retrofit): FollowerService {
+        return retrofit.create(FollowerService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideFollowerService(retrofit: Retrofit): UserApi {
-        return retrofit.create(UserApi::class.java)
+    fun provideFollowerService(retrofit: Retrofit): UserService {
+        return retrofit.create(UserService::class.java)
     }
 }

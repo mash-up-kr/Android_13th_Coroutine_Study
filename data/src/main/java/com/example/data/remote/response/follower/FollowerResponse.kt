@@ -1,25 +1,44 @@
 package com.example.data.remote.response.follower
 
+import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class FollowerResponse(
-    val avatar_url: String,
-    val events_url: String,
-    val followers_url: String,
-    val following_url: String,
-    val gists_url: String,
-    val gravatar_id: String,
-    val html_url: String,
-    val id: Int,
-    val login: String,
-    val node_id: String,
-    val organizations_url: String,
-    val received_events_url: String,
-    val repos_url: String,
-    val site_admin: Boolean,
-    val starred_url: String,
-    val subscriptions_url: String,
-    val type: String,
-    val url: String,
+    @Json(name = "avatar_url")
+    val avatarUrl: String?,
+    @Json(name = "events_url")
+    val eventsUrl: String?,
+    @Json(name = "followers_url")
+    val followersUrl: String?,
+    @Json(name = "following_url")
+    val followingUrl: String?,
+    @Json(name = "gists_url")
+    val gistsUrl: String?,
+    @Json(name = "gravatar_id")
+    val gravatarId: String?,
+    @Json(name = "html_url")
+    val htmlUrl: String?,
+    @Json(name = "id")
+    val id: Int?,
+    @Json(name = "login")
+    val login: String?,
+    @Json(name = "node_id")
+    val nodeId: String?,
+    @Json(name = "organizations_url")
+    val organizationsUrl: String?,
+    @Json(name = "received_events_url")
+    val receivedEventsUrl: String?,
+    @Json(name = "repos_url")
+    val reposUrl: String?,
+    @Json(name = "site_admin")
+    val siteAdmin: Boolean?,
+    @Json(name = "starred_url")
+    val starredUrl: String?,
+    @Json(name = "subscriptions_url")
+    val subscriptionsUrl: String?,
+    @Json(name = "type")
+    val type: String?,
+    @Json(name = "url")
+    val url: String?,
 )
