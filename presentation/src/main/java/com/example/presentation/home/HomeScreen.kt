@@ -24,7 +24,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.presentation.home.model.MashUpCrew
+import com.example.presentation.R
+import com.example.presentation.model.MashUpCrew
 import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 
 /**
@@ -33,6 +34,11 @@ import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
  * @created 2023/04/10
  */
 
+/**
+ * @author 재성
+ * XML로 하실 분은 띠용하지 마시고 가볍게 삭제하시길
+ * Compose로 하실 분들은 띠용하시고 이어서 작성하셔도 됩니당
+ */
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
     val studyCrewList = MashUpCrew.values().toList()
@@ -95,7 +101,7 @@ fun StudyCrew(
 fun StudyCrewPreview() {
     MashUpCoroutineStudyTheme {
         Surface {
-//            StudyCrew()
+            StudyCrew(R.string.jaesung, R.string.jaesung_url)
         }
     }
 }

@@ -1,4 +1,4 @@
-package com.example.presentation.home.model
+package com.example.presentation.model
 
 import androidx.annotation.StringRes
 import com.example.presentation.R
