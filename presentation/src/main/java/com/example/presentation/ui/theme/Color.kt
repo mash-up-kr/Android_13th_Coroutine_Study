@@ -8,4 +8,7 @@ val Purple700 = Color(0xFF3700B3)
 val Teal200 = Color(0xFF03DAC5)
 
 val BasePurple = Color(0xFF992DDC)
-val BasePink = Color(0xFFEB26B4)
+val BasePink = Color(0x78EB26B4)
+
+val DividerGray = Color(0xFFD9D9D9)
+val GitHubLink = Color(0xFF2141B4)
