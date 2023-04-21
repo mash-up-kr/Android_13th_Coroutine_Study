@@ -1,8 +1,12 @@
 package com.example.presentation.home
 
 import androidx.annotation.StringRes
+import androidx.compose.foundation.background
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.paddingFromBaseline
 import androidx.compose.foundation.layout.size
@@ -10,23 +14,32 @@ import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Black
+import androidx.compose.ui.graphics.Color.Companion.Gray
+import androidx.compose.ui.graphics.Color.Companion.LightGray
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.presentation.R
 import com.example.presentation.model.MashUpCrew
-import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
+import com.example.presentation.ui.components.HorizontalDivider
+import com.example.presentation.ui.theme.BasePink
+import com.example.presentation.ui.theme.BasePurple
 
 /**
  * CoroutineStudy
@@ -42,34 +55,52 @@ import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
     val studyCrewList = MashUpCrew.values().toList()
-    Column(modifier = modifier.padding(8.dp)) {
-        StudyCrewList(studyCrewList = studyCrewList, modifier = Modifier)
-
+    Column(modifier = modifier) {
+        Spacer(Modifier.height(19.dp))
+        StudyCrewList(studyCrewList = studyCrewList)
+        HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
     }
 }
 
 @Composable
-fun StudyCrewList(
+private fun StudyCrewList(
+    modifier: Modifier = Modifier,
     studyCrewList: List<MashUpCrew>,
-    modifier: Modifier = Modifier
 ) {
+    var currentSelect by remember { mutableStateOf(studyCrewList[0].userName) }
+
     LazyRow(modifier = modifier) {
-        items(studyCrewList) {
-            StudyCrew(userName = it.userName, imageUrl = it.profileImage, modifier = modifier)
+        items(studyCrewList) { mashUpCrew ->
+            StudyCrew(
+                modifier = modifier,
+                userName = mashUpCrew.userName,
+                imageUrl = mashUpCrew.profileImage,
+                currentSelect = currentSelect,
+                onSelectChange = {
+                    currentSelect = mashUpCrew.userName
+                }
+            )
         }
     }
 }
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun StudyCrew(
+private fun StudyCrew(
+    modifier: Modifier = Modifier,
     @StringRes userName: Int,
     @StringRes imageUrl: Int,
-    modifier: Modifier = Modifier
+    currentSelect: Int,
+    onSelectChange: () -> Unit,
 ) {
+    val isSelected = currentSelect == userName
+
     Column(
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(8.dp)
+        modifier = modifier
+            .padding(horizontal = 8.dp)
+            .clickable(onClick = onSelectChange)
+            .background(if (isSelected) LightGray else Transparent)
     ) {
         GlideImage(
             model = stringResource(id = imageUrl),
@@ -79,9 +110,9 @@ fun StudyCrew(
                 .size(96.dp)
                 .clip(CircleShape)
                 .border(
-                    width = 1.dp,
+                    width = 2.dp,
                     brush = Brush.verticalGradient(
-                        colors = listOf(Color.Blue, Color.Gray)
+                        colors = listOf(BasePurple, BasePink)
                     ),
                     shape = CircleShape
                 )
@@ -90,6 +121,8 @@ fun StudyCrew(
         Text(
             text = stringResource(id = userName),
             style = MaterialTheme.typography.body2,
+            fontSize = 15.sp,
+            fontWeight = FontWeight(700),
             maxLines = 1,
             modifier = Modifier.paddingFromBaseline(top = 24.dp)
         )
@@ -98,10 +131,6 @@ fun StudyCrew(
 
 @Preview
 @Composable
-fun StudyCrewPreview() {
-    MashUpCoroutineStudyTheme {
-        Surface {
-            StudyCrew(R.string.jaesung, R.string.jaesung_url)
-        }
-    }
+private fun HomeScreenPreview() {
+    HomeScreen()
 }
