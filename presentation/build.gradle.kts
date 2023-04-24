@@ -35,8 +35,6 @@ android {
 
     buildFeatures {
         compose = true
-        viewBinding = true
-        dataBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.2"
@@ -55,7 +53,6 @@ dependencies {
     debugImplementation(libs.ui.tooling)
     implementation(libs.foundation)
     implementation(libs.glide.compose)  // Compose 용
-    implementation(libs.glide.view)  // View System 용
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso)
