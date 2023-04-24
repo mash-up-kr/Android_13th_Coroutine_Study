@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class GitHubRepoResponse(
+internal data class GitHubRepoResponse(
     @Json(name = "allow_forking")
     val allowForking: Boolean?,
     @Json(name = "archive_url")
@@ -100,7 +100,7 @@ data class GitHubRepoResponse(
     @Json(name = "languages_url")
     val languagesUrl: String?,
     @Json(name = "license")
-    val license: License?,
+    val license: LicenseResponse?,
     @Json(name = "merges_url")
     val mergesUrl: String?,
     @Json(name = "milestones_url")
@@ -118,7 +118,7 @@ data class GitHubRepoResponse(
     @Json(name = "open_issues_count")
     val openIssuesCount: Int?,
     @Json(name = "owner")
-    val owner: Owner?,
+    val owner: OwnerResponse?,
     @Json(name = "private")
     val isPrivate: Boolean?,
     @Json(name = "pulls_url")

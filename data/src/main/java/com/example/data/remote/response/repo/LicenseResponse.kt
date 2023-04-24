@@ -4,7 +4,7 @@ import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class License(
+internal data class LicenseResponse(
     @Json(name = "key")
     val key: String?,
     @Json(name = "name")

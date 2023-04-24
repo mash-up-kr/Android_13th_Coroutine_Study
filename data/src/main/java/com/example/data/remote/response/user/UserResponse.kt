@@ -1,10 +1,11 @@
 package com.example.data.remote.response.user
 
+import com.example.data.remote.model.UserModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class UserResponse(
+internal data class UserResponse(
     @Json(name = "avatar_url")
     val avatarUrl: String?,
     @Json(name = "bio")
@@ -12,11 +13,11 @@ data class UserResponse(
     @Json(name = "blog")
     val blog: String?,
     @Json(name = "company")
-    val company: Any?,
+    val company: String?,
     @Json(name = "created_at")
     val createdAt: String?,
     @Json(name = "email")
-    val email: Any?,
+    val email: String?,
     @Json(name = "events_url")
     val eventsUrl: String?,
     @Json(name = "followers")
@@ -32,13 +33,13 @@ data class UserResponse(
     @Json(name = "gravatar_id")
     val gravatarId: String?,
     @Json(name = "hireable")
-    val hireable: Any?,
+    val hireable: Boolean?,
     @Json(name = "html_url")
     val htmlUrl: String?,
     @Json(name = "id")
     val id: Int?,
     @Json(name = "location")
-    val location: Any?,
+    val location: String?,
     @Json(name = "login")
     val login: String?,
     @Json(name = "name")
@@ -62,11 +63,46 @@ data class UserResponse(
     @Json(name = "subscriptions_url")
     val subscriptionsUrl: String?,
     @Json(name = "twitter_username")
-    val twitterUsername: Any?,
+    val twitterUsername: String?,
     @Json(name = "type")
     val type: String?,
     @Json(name = "updated_at")
     val updatedAt: String?,
     @Json(name = "url")
     val url: String?,
+)
+
+internal fun UserResponse.toDataModel(): UserModel = UserModel(
+    avatarUrl = avatarUrl ?: "",
+    bio = bio ?: "",
+    blog = blog ?: "",
+    company = company ?: "",
+    createdAt = createdAt ?: "",
+    email = email ?: "",
+    eventsUrl = eventsUrl ?: "",
+    followers = followers ?: 0,
+    followersUrl = followersUrl ?: "",
+    following = following ?: 0,
+    followingUrl = followingUrl ?: "",
+    gistsUrl = gistsUrl ?: "",
+    gravatarId = gravatarId ?: "",
+    hireable = hireable ?: false,
+    htmlUrl = htmlUrl ?: "",
+    id = id ?: 0,
+    location = location ?: "",
+    login = login ?: "",
+    name = name ?: "",
+    nodeId = nodeId ?: "",
+    organizationsUrl = organizationsUrl ?: "",
+    publicGists = publicGists ?: 0,
+    publicRepos = publicRepos ?: 0,
+    receivedEventsUrl = receivedEventsUrl ?: "",
+    reposUrl = reposUrl ?: "",
+    siteAdmin = siteAdmin ?: false,
+    starredUrl = starredUrl ?: "",
+    subscriptionsUrl = subscriptionsUrl ?: "",
+    twitterUserName = twitterUsername ?: "",
+    type = type ?: "",
+    updatedAt = updatedAt ?: "",
+    url = url ?:  ""
 )

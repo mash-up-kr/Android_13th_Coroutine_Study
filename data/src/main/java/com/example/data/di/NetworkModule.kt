@@ -1,10 +1,7 @@
 package com.example.data.di
 
-import com.example.data.common.BASE_URL
-import com.example.data.common.TIME_OUT_POLICY
-import com.example.data.remote.FollowerService
-import com.example.data.remote.RepoService
-import com.example.data.remote.UserService
+import com.example.data.remote.service.RepoService
+import com.example.data.remote.service.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -20,7 +17,12 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object NetworkModule {
+internal class NetworkModule {
+
+    companion object {
+        private const val BASE_URL = "https://api.github.com"
+        private const val TIME_OUT_POLICY = 10_000L
+    }
 
     @Singleton
     @Provides
@@ -71,19 +73,13 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGitHubRepoService(retrofit: Retrofit): RepoService {
+    fun provideRepoService(retrofit: Retrofit): RepoService {
         return retrofit.create(RepoService::class.java)
     }
 
     @Singleton
     @Provides
-    fun provideUserService(retrofit: Retrofit): FollowerService {
-        return retrofit.create(FollowerService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideFollowerService(retrofit: Retrofit): UserService {
+    fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
     }
 }

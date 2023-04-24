@@ -1,10 +1,11 @@
-package com.example.data.remote.response.follower
+package com.example.data.remote.response.user
 
+import com.example.data.remote.model.FollowerModel
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class FollowerResponse(
+internal data class FollowerResponse(
     @Json(name = "avatar_url")
     val avatarUrl: String?,
     @Json(name = "events_url")
@@ -41,4 +42,25 @@ data class FollowerResponse(
     val type: String?,
     @Json(name = "url")
     val url: String?,
+)
+
+internal fun FollowerResponse.toDataModel(): FollowerModel = FollowerModel(
+    login = login ?: "",
+    id = id ?: -1,
+    nodeId = nodeId ?: "",
+    avatarUrl = avatarUrl ?: "",
+    gravatarId = gravatarId ?: "",
+    url = url ?: "",
+    htmlUrl = htmlUrl ?: "",
+    followersUrl = followersUrl ?: "",
+    followingUrl = followingUrl ?: "",
+    gistUrl = gistsUrl ?: "",
+    starredUrl = starredUrl ?: "",
+    subscriptionsUrl = subscriptionsUrl ?: "",
+    organizationsUrl = organizationsUrl ?: "",
+    reposUrl = reposUrl ?: "",
+    eventsUrl = eventsUrl ?: "",
+    receivedEventsUrl = receivedEventsUrl?: "",
+    type = type ?: "",
+    siteAdmin = siteAdmin ?: false
 )
