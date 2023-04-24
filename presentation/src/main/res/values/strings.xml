@@ -24,6 +24,6 @@
     <string name="detail_public_repos">레포지토리 수</string>
     <string name="detail_blog">블로그 링크</string>
     <string name="link_to_github">Github 바로가기</string>
-    <string name="gradient_text_box_head">팔로워 </string>
+    <string name="gradient_text_box_head">팔로워&#160;</string>
     <string name="gradient_text_box_tail">명</string>
 </resources>
