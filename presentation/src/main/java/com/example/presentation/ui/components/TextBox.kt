@@ -12,6 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
@@ -42,7 +43,9 @@ fun GradientTextBox(
         contentAlignment = Alignment.Center
     ) {
         Text(
-            text = "${R.string.gradient_text_box_head}${count}${R.string.gradient_text_box_head}", //
+            text = stringResource(id = R.string.gradient_text_box_head)
+                    + count
+                    + stringResource(id = R.string.gradient_text_box_tail), //
             style = MaterialTheme.typography.body2,
             fontSize = 15.sp,
             fontWeight = FontWeight(700),

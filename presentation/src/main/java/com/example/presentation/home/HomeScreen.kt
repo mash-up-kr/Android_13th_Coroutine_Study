@@ -48,6 +48,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
         Spacer(Modifier.height(19.dp))
         StudyCrewList(studyCrewList = studyCrewList)
         HorizontalDivider(modifier = Modifier.padding(top = 16.dp))
+        UserDetail()
     }
 }
 
