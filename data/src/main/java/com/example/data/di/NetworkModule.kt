@@ -3,6 +3,7 @@ package com.example.data.di
 import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
 import com.example.data.remote.api.FollowerService
+import com.example.data.remote.api.SearchService
 import com.example.data.remote.api.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -66,6 +67,12 @@ object NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchService(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
     }
 
     @Singleton
