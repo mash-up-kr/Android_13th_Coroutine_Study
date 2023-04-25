@@ -20,4 +20,5 @@
     <string name="hyunsoo_url">https://user-images.githubusercontent.com/51078673/230872327-b36e460e-7a22-4517-903b-42581bf6fd86.png</string>
     <string name="jaehun_url">https://user-images.githubusercontent.com/51078673/230873624-1894b78b-3e49-4811-a7c6-78d54bea93d2.png</string>
     <string name="hyejin_url">https://user-images.githubusercontent.com/51078673/230894323-a7188378-12b7-440f-9a09-3422b0a5f18f.png</string>
+    <string name="title_activity_home">HomeActivity</string>
 </resources>

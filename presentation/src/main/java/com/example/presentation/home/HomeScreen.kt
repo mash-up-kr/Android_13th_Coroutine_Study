@@ -19,11 +19,14 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
+import com.example.presentation.MainViewModel
 import com.example.presentation.R
 import com.example.presentation.model.MashUpCrew
 import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
@@ -41,6 +44,10 @@ import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
  */
 @Composable
 fun HomeScreen(modifier: Modifier = Modifier) {
+    val context = LocalContext.current
+    val viewModel : MainViewModel = hiltViewModel()
+    viewModel.getUserPageInfo()
+
     val studyCrewList = MashUpCrew.values().toList()
     Column(modifier = modifier.padding(8.dp)) {
         StudyCrewList(studyCrewList = studyCrewList, modifier = Modifier)

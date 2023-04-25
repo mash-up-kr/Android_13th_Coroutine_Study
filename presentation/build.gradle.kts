@@ -61,6 +61,7 @@ dependencies {
     androidTestImplementation(libs.androidx.espresso)
 
     // hilt
+    implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
     kapt(libs.glide.compiler)
