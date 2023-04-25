@@ -1,5 +1,6 @@
 package com.example.data.remote
 
+import com.example.data.remote.api.FollowerService
 import com.example.data.remote.response.follower.FollowerResponse
 import javax.inject.Inject
 

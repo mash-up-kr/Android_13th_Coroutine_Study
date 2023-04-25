@@ -1,4 +1,4 @@
-package com.example.data.remote
+package com.example.data.remote.api
 
 import com.example.data.remote.response.follower.FollowerResponse
 import retrofit2.http.GET

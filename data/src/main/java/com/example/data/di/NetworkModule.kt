@@ -2,9 +2,8 @@ package com.example.data.di
 
 import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
-import com.example.data.remote.FollowerService
-import com.example.data.remote.RepoService
-import com.example.data.remote.UserService
+import com.example.data.remote.api.FollowerService
+import com.example.data.remote.api.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -67,12 +66,6 @@ object NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideGitHubRepoService(retrofit: Retrofit): RepoService {
-        return retrofit.create(RepoService::class.java)
     }
 
     @Singleton

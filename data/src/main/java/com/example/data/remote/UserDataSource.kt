@@ -1,5 +1,6 @@
 package com.example.data.remote
 
+import com.example.data.remote.api.UserService
 import com.example.data.remote.response.user.UserResponse
 import javax.inject.Inject
 
