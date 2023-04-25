@@ -56,6 +56,9 @@ dependencies {
     implementation(libs.foundation)
     implementation(libs.glide.compose)  // Compose 용
     implementation(libs.glide.view)  // View System 용
+    implementation(libs.lifecycle.viewmodel.compose)
+
+    // test
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso)
