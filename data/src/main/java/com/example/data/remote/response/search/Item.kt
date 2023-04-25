@@ -1,10 +1,10 @@
-package com.example.data.remote.response.repo
+package com.example.data.remote.response.search
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
-data class Owner(
+data class Item(
     @Json(name = "avatar_url")
     val avatarUrl: String?,
     @Json(name = "events_url")
@@ -31,6 +31,8 @@ data class Owner(
     val receivedEventsUrl: String?,
     @Json(name = "repos_url")
     val reposUrl: String?,
+    @Json(name = "score")
+    val score: Int?,
     @Json(name = "site_admin")
     val siteAdmin: Boolean?,
     @Json(name = "starred_url")
@@ -40,5 +42,5 @@ data class Owner(
     @Json(name = "type")
     val type: String?,
     @Json(name = "url")
-    val url: String?,
+    val url: String?
 )

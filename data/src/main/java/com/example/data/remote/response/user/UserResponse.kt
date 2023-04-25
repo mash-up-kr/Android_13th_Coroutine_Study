@@ -12,11 +12,11 @@ data class UserResponse(
     @Json(name = "blog")
     val blog: String?,
     @Json(name = "company")
-    val company: Any?,
+    val company: String?,
     @Json(name = "created_at")
     val createdAt: String?,
     @Json(name = "email")
-    val email: Any?,
+    val email: String?,
     @Json(name = "events_url")
     val eventsUrl: String?,
     @Json(name = "followers")
@@ -32,13 +32,13 @@ data class UserResponse(
     @Json(name = "gravatar_id")
     val gravatarId: String?,
     @Json(name = "hireable")
-    val hireable: Any?,
+    val hireable: String?,
     @Json(name = "html_url")
     val htmlUrl: String?,
     @Json(name = "id")
     val id: Int?,
     @Json(name = "location")
-    val location: Any?,
+    val location: String?,
     @Json(name = "login")
     val login: String?,
     @Json(name = "name")
@@ -62,7 +62,7 @@ data class UserResponse(
     @Json(name = "subscriptions_url")
     val subscriptionsUrl: String?,
     @Json(name = "twitter_username")
-    val twitterUsername: Any?,
+    val twitterUsername: String?,
     @Json(name = "type")
     val type: String?,
     @Json(name = "updated_at")
