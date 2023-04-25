@@ -22,16 +22,6 @@ class GitHubDataSource @Inject constructor(
         }
     }
 
-    suspend fun getUser(userName: String): Flow<UserResponse?> = flow {
-        runCatching {
-            service.getUser(userName)
-        }.onSuccess { response ->
-            emit(response)
-        }.onFailure {
-            emit(null)
-        }
-    }
-
     suspend fun getGitHubRepoList(userName: String): Flow<List<GitHubRepoResponse>> = flow {
         runCatching {
             service.getGitHubRepo(userName)

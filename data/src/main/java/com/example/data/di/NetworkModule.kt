@@ -1,5 +1,6 @@
 package com.example.data.di
 
+import com.example.data.AuthInterceptor
 import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
 import com.example.data.remote.service.GitHubApiService
@@ -45,7 +46,8 @@ class NetworkModule {
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
-            .addInterceptor(httpLoggingInterceptor)
+            .addNetworkInterceptor(httpLoggingInterceptor)
+            .addInterceptor(AuthInterceptor())
             .connectTimeout(
                 TIME_OUT_POLICY,
                 TimeUnit.MILLISECONDS,

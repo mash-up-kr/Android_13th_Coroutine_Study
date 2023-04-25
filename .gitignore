@@ -1,6 +1,9 @@
 # Created by https://www.toptal.com/developers/gitignore/api/androidstudio,macos,kotlin,android
 # Edit at https://www.toptal.com/developers/gitignore?templates=androidstudio,macos,kotlin,android
 
+# 내 키
+data/src/main/java/com/example/data/remote/Key.kt
+
 ### Android ###
 # Gradle files
 .gradle/
