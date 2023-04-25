@@ -6,8 +6,8 @@ ui-tooling = "1.3.1"
 glide-compose = "1.0.0-alpha.1"
 glide-view = "4.13.2"
 material = "1.2.0"
-android-application = "7.4.2"
-android-library = "7.4.2"
+android-application = "7.3.1"
+android-library = "7.3.1"
 kotlin-android = "1.7.0"
 kotlin-jvm = "1.7.0"
 kotlin = "1.7.20"
@@ -55,7 +55,7 @@ java-inject = { group = "javax.inject", name = "javax.inject", version.ref = "ja
 
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide-compose" }
 glide-view = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide-view" }
-glide-compiler = { group = "com.github.bumptech.glide", name = "copmiler", version.ref = "glide-view" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide-view" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
