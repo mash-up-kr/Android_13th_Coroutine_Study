@@ -60,5 +60,4 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    kapt(libs.glide.compiler)
 }
