@@ -1,5 +1,6 @@
 package com.example.data.remote.response.user
 
+import com.example.domain.model.User
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -69,4 +70,11 @@ data class UserResponse(
     val updatedAt: String?,
     @Json(name = "url")
     val url: String?,
-)
+) {
+    fun toDomain(): User = User(
+        name = name ?: "",
+        blogUrl = blog ?: "",
+        repoCnt = publicRepos ?: 0,
+        followerCnt = followers ?: 0,
+    )
+}
