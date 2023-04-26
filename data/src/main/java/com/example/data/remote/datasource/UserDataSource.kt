@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
  * @author jaesung
  * @created 2023/04/24
  */
-interface UserDataSource {
+internal interface UserDataSource {
 
     fun getUser(userName: String): Flow<UserResponse?>
 
