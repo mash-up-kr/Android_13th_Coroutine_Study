@@ -1,30 +1,28 @@
 package com.example.presentation
 
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import com.example.presentation.home.HomeScreen
-import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import com.example.presentation.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
 
-/**
- * CoroutineStudy
- * @author jaesung
- * @created 2023/04/10
- */
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    private val mainViewModel: MainViewModel by viewModels()
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            MashUpCoroutineStudyApp()
-        }
+        setContentView(binding.root)
+        mainViewModel.tmp()
     }
-}
 
-@Composable
-fun MashUpCoroutineStudyApp() {
-    MashUpCoroutineStudyTheme {
-        HomeScreen()
+    override fun onDestroy() {
+        super.onDestroy()
     }
 }
 
