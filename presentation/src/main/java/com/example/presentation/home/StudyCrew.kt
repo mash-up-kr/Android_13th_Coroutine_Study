@@ -36,13 +36,13 @@ import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 
 @Composable
 @OptIn(ExperimentalGlideComposeApi::class)
-fun CircularImage(imageUrl: Int, userName: Int) {
+fun CircularImage(imageUrl: Int, userName: Int, size: Int = 96) {
     GlideImage(
         model = stringResource(id = imageUrl),
         contentDescription = stringResource(id = userName),
         contentScale = ContentScale.Fit,
         modifier = Modifier
-            .size(96.dp)
+            .size(size.dp)
             .clip(CircleShape)
             .border(
                 width = 1.dp,
