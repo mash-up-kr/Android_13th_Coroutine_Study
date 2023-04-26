@@ -59,7 +59,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso)
-
+    implementation("androidx.compose.runtime:runtime-livedata:1.1.0")
     // hilt
     implementation("androidx.hilt:hilt-navigation-compose:1.0.0-alpha03")
     implementation(libs.hilt.android)
