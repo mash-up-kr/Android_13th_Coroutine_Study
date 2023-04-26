@@ -1,6 +1,5 @@
 package com.example.presentation.home
 
-import android.widget.Space
 import androidx.annotation.StringRes
 import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
@@ -13,7 +12,6 @@ import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Surface
 import androidx.compose.material.Text
 import androidx.compose.runtime.*
-import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -29,7 +27,6 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
 import com.example.domain.model.Follower
-import com.example.domain.model.User
 import com.example.domain.model.UserPage
 import com.example.presentation.HomeViewModel
 import com.example.presentation.R
@@ -52,7 +49,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val viewModel: HomeViewModel = hiltViewModel()
 
-    val userPage = viewModel.userPage.observeAsState().value
+    val userPage = viewModel.userPage.collectAsState().value
     var selectedCrew by rememberSaveable { mutableStateOf(MashUpCrew.MASHUP) }
     val studyCrewList = MashUpCrew.values().toList()
 

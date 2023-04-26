@@ -8,6 +8,10 @@ import com.example.domain.UserPageRepository
 import com.example.domain.model.Follower
 import com.example.domain.model.User
 import com.example.domain.model.UserPage
+import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.zip
 import javax.inject.Inject
 
 
@@ -16,27 +20,31 @@ class UserPageRepositoryImpl @Inject constructor(
     private val userDataSource: UserDataSource,
 ) : UserPageRepository {
 
-    override suspend fun getUserPageInfo(userName: String): UserPage {
-        val user = getUser(userName) ?: run {
-            Log.i("UserPageRepositoryImpl", "$this")
-            throw IllegalArgumentException()
+
+    override suspend fun getUserPageInfo(userName: String): Flow<UserPage> {
+        val user = getUser(userName)
+        val followers = getFollowers(userName)
+        return user.zip(followers) { user, followers ->
+            UserPage(user, followers)
         }
-        val follower = getFollowers(userName)
-        return UserPage(user = user, followers = follower)
     }
 
-    private suspend fun getUser(userName: String): User? {
-        val user = userDataSource.getUser(userName)?.toDomain()
-        Log.i("UserPageRepositoryImpl", "getUser: user= $user")
-        return user
-    }
 
-    private suspend fun getFollowers(userName: String): List<Follower> {
-        val followers = followerDataSource.getFollowers(userName).map {
-            it.toDomain()
-        }
-        Log.i("UserPageRepositoryImpl", "getFollowers= $followers")
-        return followers
-    }
+    private suspend fun getUser(userName: String): Flow<User> =
+        userDataSource.getUser(userName)
+            .map { userResponse ->
+                userResponse.toDomain()
+            }.catch { exception ->
+                Log.i("UserPageRepositoryImpl", "getUser: exception= $exception")
+            }
+
+
+    private suspend fun getFollowers(userName: String): Flow<List<Follower>> =
+        followerDataSource.getFollowers(userName)
+            .map { followerResponses ->
+                followerResponses.map { it.toDomain() }
+            }.catch { exception ->
+                Log.i("UserPageRepositoryImpl", "getFollower: exception= $exception")
+            }
 
 }
