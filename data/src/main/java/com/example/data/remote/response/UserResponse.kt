@@ -1,4 +1,4 @@
-package com.example.data.remote.response.user
+package com.example.data.remote.response
 
 import com.example.data.remote.model.UserModel
 import com.squareup.moshi.Json

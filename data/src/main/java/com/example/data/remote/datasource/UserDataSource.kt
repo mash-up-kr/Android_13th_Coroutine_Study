@@ -1,7 +1,8 @@
 package com.example.data.remote.datasource
 
-import com.example.data.remote.response.user.FollowerResponse
-import com.example.data.remote.response.user.UserResponse
+import com.example.data.remote.model.FollowerModel
+import com.example.data.remote.model.SearchModel
+import com.example.data.remote.model.UserModel
 import kotlinx.coroutines.flow.Flow
 
 /**
@@ -11,7 +12,9 @@ import kotlinx.coroutines.flow.Flow
  */
 internal interface UserDataSource {
 
-    fun getUser(userName: String): Flow<UserResponse?>
+    fun getUser(userName: String): Flow<UserModel?>
 
-    fun getFollowers(userName: String): Flow<List<FollowerResponse>>
+    fun getFollowers(userName: String): Flow<List<FollowerModel>>
+
+    fun searchUsers(query: String): Flow<SearchModel?>
 }

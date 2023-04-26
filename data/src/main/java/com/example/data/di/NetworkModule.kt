@@ -1,6 +1,5 @@
 package com.example.data.di
 
-import com.example.data.remote.service.RepoService
 import com.example.data.remote.service.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -69,12 +68,6 @@ internal class NetworkModule {
             .addConverterFactory(MoshiConverterFactory.create(moshi))
             .client(okHttpClient)
             .build()
-    }
-
-    @Singleton
-    @Provides
-    fun provideRepoService(retrofit: Retrofit): RepoService {
-        return retrofit.create(RepoService::class.java)
     }
 
     @Singleton
