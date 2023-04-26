@@ -14,7 +14,7 @@ import dagger.hilt.android.AndroidEntryPoint
  * @created 2023/04/10
  */
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class HomeActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
