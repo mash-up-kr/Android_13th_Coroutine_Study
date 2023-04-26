@@ -200,14 +200,3 @@ fun StudyCrewPreview() {
         }
     }
 }
-
-@Preview
-@Composable
-fun HiPreview() {
-    Hi()
-}
-
-@Composable
-fun Hi() {
-    Text(text = "hi")
-}

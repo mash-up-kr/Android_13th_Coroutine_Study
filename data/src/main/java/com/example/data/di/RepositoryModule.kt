@@ -1,7 +1,7 @@
 package com.example.data.di
 
-import com.example.domain.UserPageRepository
 import com.example.data.UserPageRepositoryImpl
+import com.example.domain.UserPageRepository
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
@@ -15,7 +15,7 @@ abstract class RepositoryModule {
     @Binds
     @Singleton
     abstract fun bindUserPageRepository(
-        githubSearchRepositoryImpl: UserPageRepositoryImpl
+        userPageRepository: UserPageRepositoryImpl
     ): UserPageRepository
 
 }
