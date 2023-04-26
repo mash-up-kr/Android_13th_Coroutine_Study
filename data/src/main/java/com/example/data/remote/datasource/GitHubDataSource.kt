@@ -13,32 +13,14 @@ class GitHubDataSource @Inject constructor(
 ) {
 
     fun searchUsers(query: String): Flow<SearchUserResponse> = flow {
-        runCatching {
-            service.searchUsers(query)
-        }.onSuccess { response ->
-            emit(response)
-        }.onFailure { e ->
-            throw e
-        }
+        emit(service.searchUsers(query))
     }
 
     fun getFollowers(userName: String): Flow<List<FollowerResponse>> = flow {
-        runCatching {
-            service.getFollowers(userName)
-        }.onSuccess { response ->
-            emit(response)
-        }.onFailure { e ->
-            throw e
-        }
+        emit(service.getFollowers(userName))
     }
 
     fun getUser(userName: String): Flow<UserResponse> = flow {
-        runCatching {
-            service.getUser(userName)
-        }.onSuccess { response ->
-            emit(response)
-        }.onFailure { e ->
-            throw e
-        }
+        emit(service.getUser(userName))
     }
 }
