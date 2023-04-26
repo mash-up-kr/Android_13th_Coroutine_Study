@@ -1,6 +1,7 @@
 package com.example.presentation.model
 
 import androidx.annotation.StringRes
+import androidx.compose.ui.res.stringResource
 import com.example.presentation.R
 
 /**
@@ -20,5 +21,14 @@ enum class MashUpCrew(
     DAYEON(R.string.dayeon, R.string.dayeon_url),
     HYUNSOO(R.string.hyunsoo, R.string.hyunsoo_url),
     JAEHUN(R.string.jaehun, R.string.jaehun_url),
-    HYEJIN(R.string.hyejin, R.string.hyejin_url)
+    HYEJIN(R.string.hyejin, R.string.hyejin_url);
+
+    companion object{
+        fun of(userName: Int): MashUpCrew{
+            return values().firstOrNull { it.userName == userName } ?: run {
+                MASHUP
+            }
+        }
+
+    }
 }
