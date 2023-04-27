@@ -1,6 +1,7 @@
 package com.example.data.repository
 
 import ResultWrapper
+import android.util.Log
 import com.example.data.remote.datasource.GitHubDataSource
 import com.example.data.remote.response.search.Item
 import kotlinx.coroutines.FlowPreview
@@ -40,7 +41,7 @@ class GitHubRepositoryImpl @Inject constructor(
                         emit(ResultWrapper.Fail("CombineError[getFollowers]"))
                     }.combine(getUser(user.login ?: "")) { follower, userInfo ->
                         SearchModel(
-                            name = userInfo.name ?: DEFAULT_STRING,
+                            name = userInfo.login ?: DEFAULT_STRING,
                             avatarUrl = userInfo.avatarUrl ?: DEFAULT_STRING,
                             followerCount = userInfo.followers ?: DEFAULT_NUMBER,
                             followingCount = userInfo.following ?: DEFAULT_NUMBER,

@@ -32,7 +32,7 @@ data class UserResponse(
     @Json(name = "gravatar_id")
     val gravatarId: String?,
     @Json(name = "hireable")
-    val hireable: String?,
+    val hireable: Any?,
     @Json(name = "html_url")
     val htmlUrl: String?,
     @Json(name = "id")
@@ -40,9 +40,9 @@ data class UserResponse(
     @Json(name = "location")
     val location: String?,
     @Json(name = "login")
-    val login: String?,
+    val login: String? = "",
     @Json(name = "name")
-    val name: String?,
+    val name: String? = "",
     @Json(name = "node_id")
     val nodeId: String?,
     @Json(name = "organizations_url")
