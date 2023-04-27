@@ -6,5 +6,5 @@ import javax.inject.Inject
 class GetSearchModelUseCase @Inject constructor(
     private val repository: GitHubRepository
 ) {
-    operator fun invoke(query: String = "KimHance") = repository.getSearchModel(query)
+    operator fun invoke(query: String) = repository.getSearchModel(query)
 }
