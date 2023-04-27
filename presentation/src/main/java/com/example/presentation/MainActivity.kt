@@ -8,6 +8,7 @@ import androidx.core.widget.doOnTextChanged
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import com.example.presentation.adapter.SearchListAdapter
 import com.example.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.FlowPreview
@@ -27,10 +28,28 @@ class MainActivity : AppCompatActivity() {
     }
 
     private val mainViewModel: MainViewModel by viewModels()
+    private val searchAdapter: SearchListAdapter by lazy {
+        SearchListAdapter(itemClickListener = {
+
+        })
+    }
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
+        binding.lifecycleOwner = this
+        initView()
+        collectFlows()
+    }
+
+    private fun initView() {
+        binding.apply {
+            vm = mainViewModel
+            with(rvSearchList) {
+                adapter = searchAdapter
+            }
+        }
         initDebounceSearch()
     }
 
@@ -47,8 +66,16 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
+    private fun collectFlows() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                with(mainViewModel) {
+                    searchList.collectLatest {
+                        searchAdapter.submitList(it)
+                    }
+                }
+            }
+        }
     }
 }
 

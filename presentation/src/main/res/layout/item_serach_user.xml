@@ -6,6 +6,9 @@
 
     <data>
 
+        <variable
+            name="item"
+            type="model.SearchModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -15,8 +18,9 @@
 
         <ImageView
             android:id="@+id/iv_search_avatar"
-            android:layout_width="96dp"
-            android:layout_height="96dp"
+            bindImage="@{item.avatarUrl}"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
@@ -27,8 +31,9 @@
             android:layout_height="wrap_content"
             android:ellipsize="end"
             android:gravity="center"
+            android:text="@{item.name}"
             android:textColor="@color/black"
-            android:textSize="15dp"
+            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/iv_search_avatar"
             app:layout_constraintStart_toStartOf="@id/iv_search_avatar"

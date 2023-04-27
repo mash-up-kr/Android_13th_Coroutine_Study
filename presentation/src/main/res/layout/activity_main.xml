@@ -6,11 +6,24 @@
 
     <data>
 
+        <variable
+            name="vm"
+            type="com.example.presentation.MainViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
+
+        <ProgressBar
+            android:id="@+id/pb_search"
+            bindLoading="@{vm.isLoading}"
+            android:layout_width="wrap_content"
+            android:layout_height="20dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintBottom_toBottomOf="@id/et_search"
+            app:layout_constraintEnd_toEndOf="@id/et_search"
+            app:layout_constraintTop_toTopOf="@id/et_search" />
 
         <EditText
             android:id="@+id/et_search"
@@ -27,7 +40,7 @@
             android:id="@+id/rv_search_list"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:orientation="horizontal"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintTop_toBottomOf="@id/et_search"
@@ -36,9 +49,9 @@
 
         <ImageView
             android:id="@+id/iv_selected_user"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_marginTop="20dp"
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/rv_search_list"
@@ -63,7 +76,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="-10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="팔로워 수: "
             app:layout_constraintStart_toStartOf="@id/iv_selected_user"
             app:layout_constraintTop_toBottomOf="@id/tv_selected_user" />
@@ -73,7 +86,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="-10dp"
-            android:layout_marginTop="10dp"
+            android:layout_marginTop="5dp"
             android:text="팔로잉 수: "
             app:layout_constraintStart_toStartOf="@id/iv_selected_user"
             app:layout_constraintTop_toBottomOf="@id/tv_follower_count" />

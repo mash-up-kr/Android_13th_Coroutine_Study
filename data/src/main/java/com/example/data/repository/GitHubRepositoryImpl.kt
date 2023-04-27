@@ -59,7 +59,7 @@ class GitHubRepositoryImpl @Inject constructor(
                         with(fetchedList) {
                             add(model)
                             if (size == count) {
-                                emit(ResultWrapper.Success(fetchedList))
+                                emit(ResultWrapper.Success(fetchedList.toList()))
                             }
                         }
                     }
