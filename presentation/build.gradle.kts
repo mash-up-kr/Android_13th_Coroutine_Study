@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.activity.compose)
     implementation(libs.ui.tooling.preview)
     implementation("androidx.constraintlayout:constraintlayout:2.1.4")
+    implementation("androidx.recyclerview:recyclerview:1.3.0")
     debugImplementation(libs.ui.tooling)
     implementation(libs.foundation)
     implementation(libs.glide.compose)  // Compose 용

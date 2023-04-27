@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
 
     <data>
 
@@ -8,14 +10,95 @@
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="match_parent">
+
+        <EditText
+            android:id="@+id/et_search"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:hint="닉네임 검색"
+            android:importantForAutofill="no"
+            android:inputType="text"
+            android:paddingHorizontal="20dp"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:ignore="LabelFor" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_search_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:orientation="horizontal"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layout_constraintTop_toBottomOf="@id/et_search"
+            tools:listitem="@layout/item_serach_user" />
+
+
+        <ImageView
+            android:id="@+id/iv_selected_user"
+            android:layout_width="110dp"
+            android:layout_height="110dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/rv_search_list"
+            tools:src="@tools:sample/avatars" />
 
         <TextView
+            android:id="@+id/tv_selected_user"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:textSize="18dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/iv_selected_user"
+            tools:text="KimHance" />
+
+        <TextView
+            android:id="@+id/tv_follower_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="10dp"
+            android:text="팔로워 수: "
+            app:layout_constraintStart_toStartOf="@id/iv_selected_user"
+            app:layout_constraintTop_toBottomOf="@id/tv_selected_user" />
+
+        <TextView
+            android:id="@+id/tv_following_count"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="-10dp"
+            android:layout_marginTop="10dp"
+            android:text="팔로잉 수: "
+            app:layout_constraintStart_toStartOf="@id/iv_selected_user"
+            app:layout_constraintTop_toBottomOf="@id/tv_follower_count" />
+
+        <TextView
+            android:id="@+id/tv_follow_type"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:layout_marginEnd="20dp"
+            android:textColor="@color/black"
+            android:textSize="15dp"
+            android:textStyle="bold"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_following_count"
+            tools:text="팔로워" />
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/rv_follow_list"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:textSize="300sp"
-            android:text="hi" />
+            android:layout_height="0dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/tv_follow_type"
+            tools:listitem="@layout/item_follow_user" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
