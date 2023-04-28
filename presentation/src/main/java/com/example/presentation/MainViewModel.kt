@@ -9,7 +9,6 @@ import com.example.presentation.model.SearchState
 import com.example.presentation.model.UserInfoModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -39,9 +38,9 @@ class MainViewModel @Inject constructor(
         viewModelScope.launch {
             searchState.collect {
                 when (it) {
-                    is SearchState.Loading -> {  }
-                    is SearchState.Success -> {  }
-                    is SearchState.Error -> {  }
+                    is SearchState.Loading -> {}
+                    is SearchState.Success -> {}
+                    is SearchState.Error -> {}
                 }
             }
         }
@@ -60,15 +59,17 @@ class MainViewModel @Inject constructor(
                 val searchResult = mutableListOf<UserInfoModel>()
 
                 searchList.forEach {
-                    val userInfo = async { getUserInfoUseCase(it.name) }
-                    val followerList = async { getFollowerListUseCase(it.name) }
+                    val userInfoFlow = flow { emit(getUserInfoUseCase(it.name)) }
+                    val followerListFlow = flow { emit(getFollowerListUseCase(it.name)) }
 
-                    searchResult.add(
+                    userInfoFlow.combine(followerListFlow) { userInfo, followerList ->
                         UserInfoModel(
-                            userInfo = userInfo.await(),
-                            followerList = followerList.await()
+                            userInfo = userInfo,
+                            followerList = followerList
                         )
-                    )
+                    }.collect {
+                        searchResult.add(it)
+                    }
                 }
 
                 _searchState.value = SearchState.Success(searchResult)
