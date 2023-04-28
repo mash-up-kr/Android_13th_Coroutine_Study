@@ -14,30 +14,18 @@ import javax.inject.Inject
 internal class UserDataSourceImpl @Inject constructor(
     private val service: UserService,
 ) : UserDataSource {
-    override fun getUser(userName: String): Flow<UserModel?> = flow {
+    override fun getUser(userName: String): Flow<UserModel> = flow {
         val userResponse = service.getUser(userName).toDataModel()
-        emit(
-            runCatching {
-                userResponse
-            }.getOrNull()
-        )
+        emit(userResponse)
     }
 
     override fun getFollowers(userName: String): Flow<List<FollowerModel>> = flow {
         val followerResponse = service.getFollowers(userName).map { it.toDataModel() }
-        emit(
-            runCatching {
-                followerResponse
-            }.getOrDefault(emptyList())
-        )
+        emit(followerResponse)
     }
 
-    override fun searchUsers(query: String): Flow<SearchModel?> = flow {
+    override fun searchUsers(query: String): Flow<SearchModel> = flow {
         val searchResponse = service.searchUsers(query).toDataModel()
-        emit(
-            runCatching {
-                searchResponse
-            }.getOrNull()
-        )
+        emit(searchResponse)
     }
 }

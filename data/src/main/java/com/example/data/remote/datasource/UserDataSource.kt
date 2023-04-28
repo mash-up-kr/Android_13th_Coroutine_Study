@@ -12,9 +12,9 @@ import kotlinx.coroutines.flow.Flow
  */
 internal interface UserDataSource {
 
-    fun getUser(userName: String): Flow<UserModel?>
+    fun getUser(userName: String): Flow<UserModel>
 
     fun getFollowers(userName: String): Flow<List<FollowerModel>>
 
-    fun searchUsers(query: String): Flow<SearchModel?>
+    fun searchUsers(query: String): Flow<SearchModel>
 }

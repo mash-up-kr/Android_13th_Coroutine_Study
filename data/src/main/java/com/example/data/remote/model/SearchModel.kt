@@ -1,5 +1,8 @@
 package com.example.data.remote.model
 
+import com.example.domain.entity.Search
+import com.example.domain.entity.SearchItem
+
 /**
  * CoroutineStudy
  * @author jaesung
@@ -31,4 +34,13 @@ data class SearchItemModel(
     val starredUrl: String,
     val eventsUrl: String,
     val siteAdmin: Boolean,
+)
+
+internal fun SearchModel.toDomain() = Search(
+    totalCount = totalCount,
+    items = items.map {
+        SearchItem(
+            login = it.login
+        )
+    },
 )

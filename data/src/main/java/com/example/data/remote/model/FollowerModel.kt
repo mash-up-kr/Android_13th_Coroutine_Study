@@ -1,5 +1,7 @@
 package com.example.data.remote.model
 
+import com.example.domain.entity.Follower
+
 /**
  * CoroutineStudy
  * @author jaesung
@@ -24,4 +26,10 @@ internal data class FollowerModel(
     val receivedEventsUrl: String,
     val type: String,
     val siteAdmin: Boolean
+)
+
+internal fun FollowerModel.toDomain() = Follower(
+    login = login,
+    avatarUrl = avatarUrl,
+    htmlUrl = htmlUrl,
 )

@@ -3,11 +3,10 @@ package com.example.domain.entity
 /**
  * CoroutineStudy
  * @author jaesung
- * @created 2023/04/24
+ * @created 2023/04/27
  */
-data class User(
+data class Follower(
     val login: String,
     val avatarUrl: String,
-    val blog: String,
-    val followers: Int,
+    val htmlUrl: String,
 )

@@ -1,5 +1,7 @@
 package com.example.data.remote.model
 
+import com.example.domain.entity.User
+
 /**
  * CoroutineStudy
  * @author jaesung
@@ -38,4 +40,11 @@ internal data class UserModel(
     val type: String,
     val updatedAt: String,
     val url: String
+)
+
+internal fun UserModel.toDomain() = User(
+    login = login,
+    avatarUrl = avatarUrl,
+    blog = blog,
+    followers = followers,
 )
