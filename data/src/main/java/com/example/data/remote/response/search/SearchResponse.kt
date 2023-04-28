@@ -5,8 +5,12 @@ import com.squareup.moshi.JsonClass
 
 @JsonClass(generateAdapter = true)
 data class SearchResponse(
-    @Json(name = "avatar_url")
-    val avatarUrl: String?,
-    @Json(name = "login")
-    val login: String?,
-)
+    @Json(name = "items")
+    val items: List<Item>,
+) {
+    @JsonClass(generateAdapter = true)
+    data class Item(
+        @Json(name = "login")
+        val login: String?,
+    )
+}

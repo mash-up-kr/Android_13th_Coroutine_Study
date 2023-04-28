@@ -8,5 +8,5 @@ interface SearchService {
     @GET("/search/users")
     suspend fun searchUsers(
         @Query("q") keyword: String,
-    ): List<SearchResponse>
+    ): SearchResponse
 }

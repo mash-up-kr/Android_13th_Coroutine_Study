@@ -7,9 +7,9 @@ import javax.inject.Inject
 class SearchDataSource @Inject constructor(
     private val service: SearchService,
 ) {
-    suspend fun searchUsers(keyword: String): List<SearchResponse> {
+    suspend fun searchUsers(keyword: String): SearchResponse? {
         return runCatching {
             service.searchUsers(keyword)
-        }.getOrDefault(emptyList())
+        }.getOrNull()
     }
 }
