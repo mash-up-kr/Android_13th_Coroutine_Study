@@ -1,5 +1,6 @@
 package com.example.data.di
 
+import com.example.data.remote.service.AuthInterceptor
 import com.example.data.remote.service.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -43,12 +44,18 @@ internal class NetworkModule {
 
     @Singleton
     @Provides
+    fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor()
+
+    @Singleton
+    @Provides
     fun provideClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
+        authInterceptor: AuthInterceptor
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
             .addInterceptor(httpLoggingInterceptor)
+            .addNetworkInterceptor(authInterceptor)
             .connectTimeout(
                 TIME_OUT_POLICY,
                 TimeUnit.MILLISECONDS,
