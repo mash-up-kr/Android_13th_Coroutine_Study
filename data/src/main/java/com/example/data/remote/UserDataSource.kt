@@ -9,7 +9,7 @@ class UserDataSource @Inject constructor(
 ) {
     suspend fun getUser(userName: String): UserResponse? {
         return runCatching {
-            service.getUser(userName)
+            service.getUser(userName = userName)
         }.getOrNull()
     }
 }

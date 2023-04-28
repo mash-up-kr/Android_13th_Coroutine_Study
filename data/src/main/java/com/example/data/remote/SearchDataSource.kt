@@ -9,7 +9,7 @@ class SearchDataSource @Inject constructor(
 ) {
     suspend fun searchUsers(keyword: String): SearchResponse? {
         return runCatching {
-            service.searchUsers(keyword)
+            service.searchUsers(keyword = keyword)
         }.getOrNull()
     }
 }

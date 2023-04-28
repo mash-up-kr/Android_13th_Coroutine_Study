@@ -9,7 +9,7 @@ class FollowerDataSource @Inject constructor(
 ) {
     suspend fun getFollowers(userName: String): List<FollowerResponse> {
         return runCatching {
-            service.getFollowers(userName)
+            service.getFollowers(userName = userName)
         }.getOrDefault(emptyList())
     }
 }
