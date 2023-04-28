@@ -54,7 +54,7 @@ class MainViewModel @Inject constructor(
             val searchList = searchUsersUseCase(keyword)
 
             if (searchList.isEmpty()) {
-                _searchState.value = SearchState.Error("검색 결과가 없습니다.")
+                handleError("검색 결과가 없습니다.")
             } else {
                 val searchResult = mutableListOf<UserInfoModel>()
 
@@ -67,6 +67,8 @@ class MainViewModel @Inject constructor(
                             userInfo = userInfo,
                             followerList = followerList
                         )
+                    }.catch {
+                        handleError("검색 중 문제가 발생했습니다.")
                     }.collect {
                         searchResult.add(it)
                     }
@@ -75,5 +77,9 @@ class MainViewModel @Inject constructor(
                 _searchState.value = SearchState.Success(searchResult)
             }
         }
+    }
+
+    private fun handleError(errorMessage: String) {
+        _searchState.value = SearchState.Error(errorMessage)
     }
 }
