@@ -9,6 +9,7 @@ import com.example.presentation.model.SearchState
 import com.example.presentation.model.UserInfoModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
+import kotlinx.coroutines.async
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import javax.inject.Inject
@@ -59,13 +60,13 @@ class MainViewModel @Inject constructor(
                 val searchResult = mutableListOf<UserInfoModel>()
 
                 searchList.forEach {
-                    val userInfo = getUserInfoUseCase(it.name)
-                    val followerList = getFollowerListUseCase(it.name)
+                    val userInfo = async { getUserInfoUseCase(it.name) }
+                    val followerList = async { getFollowerListUseCase(it.name) }
 
                     searchResult.add(
                         UserInfoModel(
-                            userInfo = userInfo,
-                            followerList = followerList
+                            userInfo = userInfo.await(),
+                            followerList = followerList.await()
                         )
                     )
                 }
