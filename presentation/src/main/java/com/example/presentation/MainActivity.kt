@@ -1,7 +1,6 @@
 package com.example.presentation
 
 import android.os.Bundle
-import android.widget.EditText
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.widget.doOnTextChanged
@@ -11,14 +10,8 @@ import androidx.lifecycle.repeatOnLifecycle
 import com.example.presentation.adapter.SearchListAdapter
 import com.example.presentation.databinding.ActivityMainBinding
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.FlowPreview
-import kotlinx.coroutines.channels.awaitClose
-import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.callbackFlow
-import kotlinx.coroutines.flow.collectLatest
-import kotlinx.coroutines.flow.debounce
-import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.launch
+import model.SearchModel
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -29,8 +22,8 @@ class MainActivity : AppCompatActivity() {
 
     private val mainViewModel: MainViewModel by viewModels()
     private val searchAdapter: SearchListAdapter by lazy {
-        SearchListAdapter(itemClickListener = {
-
+        SearchListAdapter(itemClickListener = { searchModel ->
+            onSearchItemClick(searchModel)
         })
     }
 
@@ -49,20 +42,7 @@ class MainActivity : AppCompatActivity() {
             with(rvSearchList) {
                 adapter = searchAdapter
             }
-        }
-        initDebounceSearch()
-    }
-
-    @OptIn(FlowPreview::class)
-    private fun initDebounceSearch() {
-        lifecycleScope.launch {
-            repeatOnLifecycle(Lifecycle.State.STARTED) {
-                binding.etSearch.debounceSearch().debounce(500L).collectLatest { charSequence ->
-                    if (charSequence?.isNotBlank() == true) {
-                        mainViewModel.searchUser(charSequence.toString())
-                    }
-                }
-            }
+            etSearch.doOnTextChanged { text, _, _, _ -> mainViewModel.setQuery(text.toString()) }
         }
     }
 
@@ -70,20 +50,17 @@ class MainActivity : AppCompatActivity() {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
                 with(mainViewModel) {
-                    searchList.collectLatest {
+                    searchList.collect {
                         searchAdapter.submitList(it)
                     }
                 }
             }
         }
     }
-}
 
-fun EditText.debounceSearch(): Flow<CharSequence?> {
-    return callbackFlow {
-        val listener = doOnTextChanged { text, _, _, _ -> trySend(text) }
-        awaitClose { removeTextChangedListener(listener) }
-    }.onStart { emit(text) }
+    fun onSearchItemClick(item: SearchModel) {
+        mainViewModel.selectItem(item)
+    }
 }
 
 

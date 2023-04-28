@@ -13,7 +13,6 @@ class GitHubDataSource @Inject constructor(
 ) {
 
     fun searchUsers(query: String): Flow<SearchUserResponse> = flow { emit(service.searchUsers(query)) }
-
     fun getFollowers(userName: String): Flow<List<FollowerResponse>> = flow { emit(service.getFollowers(userName)) }
 
     fun getUser(userName: String): Flow<UserResponse> = flow { emit(service.getUser(userName)) }

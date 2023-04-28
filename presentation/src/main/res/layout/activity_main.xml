@@ -36,6 +36,18 @@
             app:layout_constraintTop_toTopOf="parent"
             tools:ignore="LabelFor" />
 
+        <Button
+            android:id="@+id/btn_search"
+            bindLoading="@{vm.isLoading}"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginEnd="10dp"
+            android:onClick="@{() -> vm.searchUser()}"
+            android:text="검색"
+            app:layout_constraintBottom_toBottomOf="@id/et_search"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="@id/et_search" />
+
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_search_list"
             android:layout_width="match_parent"

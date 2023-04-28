@@ -33,7 +33,6 @@
             android:gravity="center"
             android:text="@{item.name}"
             android:textColor="@color/black"
-            android:textSize="14dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="@id/iv_search_avatar"
             app:layout_constraintStart_toStartOf="@id/iv_search_avatar"

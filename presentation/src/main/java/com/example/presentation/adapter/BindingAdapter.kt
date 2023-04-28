@@ -1,6 +1,7 @@
 package com.example.presentation.adapter
 
 import android.view.View
+import android.widget.Button
 import android.widget.ImageView
 import androidx.core.view.isVisible
 import androidx.databinding.BindingAdapter
@@ -13,5 +14,9 @@ fun ImageView.bindImage(url: String) {
 
 @BindingAdapter("bindLoading")
 fun bindLoading(view: View, isLoading: Boolean) {
-    view.isVisible = isLoading
+    if (view is Button) {
+        view.isVisible = !isLoading
+    } else {
+        view.isVisible = isLoading
+    }
 }

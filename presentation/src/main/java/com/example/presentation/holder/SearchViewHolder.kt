@@ -9,6 +9,14 @@ class SearchViewHolder(
     private val itemClickListener: (SearchModel) -> Unit,
 ) : RecyclerView.ViewHolder(binding.root) {
 
+    init {
+        itemView.setOnClickListener {
+            binding.item?.let{
+                itemClickListener(it)
+            }
+        }
+    }
+
     fun bind(item: SearchModel) {
         binding.apply {
             this.item = item

@@ -1,15 +1,16 @@
 package com.example.data.repository
 
 import ResultWrapper
-import android.util.Log
 import com.example.data.remote.datasource.GitHubDataSource
 import com.example.data.remote.response.search.Item
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.stateIn
 import model.SearchModel
 import repository.GitHubRepository
 import javax.inject.Inject
@@ -39,7 +40,7 @@ class GitHubRepositoryImpl @Inject constructor(
                 getFollowers(user.login ?: DEFAULT_STRING)
                     .catch {
                         emit(ResultWrapper.Fail("CombineError[getFollowers]"))
-                    }.combine(getUser(user.login ?: "")) { follower, userInfo ->
+                    }.combine(getUser(user.login ?: DEFAULT_STRING)) { follower, userInfo ->
                         SearchModel(
                             name = userInfo.login ?: DEFAULT_STRING,
                             avatarUrl = userInfo.avatarUrl ?: DEFAULT_STRING,
