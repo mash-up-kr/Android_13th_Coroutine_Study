@@ -1,5 +1,6 @@
 package com.example.presentation.home
 
+import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
@@ -28,32 +29,31 @@ import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 fun HomeScreen(modifier: Modifier = Modifier) {
     val studyCrewList = MashUpCrew.values().toList()
 
-    LazyColumn(modifier = modifier) {
-        item {
-            StudyCrewList(studyCrewList = studyCrewList)
-        }
-        item {
-            Divider(
-                thickness = 1.dp,
-                modifier = Modifier.fillMaxWidth()
-            )
-        }
-        item {
-            UserInfo(
-                modifier = Modifier.padding(16.dp),
-                imageUrl = R.string.jaesung_url,
-                userName = R.string.jaesung
-            )
-        }
-        item {
-            FollowerHeader(modifier = Modifier, followers = "40")
-        }
-        items(10) {
-            FollowerContent(modifier = Modifier.padding(8.dp))
-            Divider(
-                thickness = 1.dp,
-                modifier = Modifier.fillMaxWidth()
-            )
+    Column(modifier = modifier) {
+        SearchBar(onSearch = {})
+        StudyCrewList(studyCrewList = studyCrewList)
+        Divider(
+            thickness = 1.dp,
+            modifier = Modifier.fillMaxWidth()
+        )
+        LazyColumn(modifier = modifier) {
+            item {
+                UserInfo(
+                    modifier = Modifier.padding(16.dp),
+                    imageUrl = R.string.jaesung_url,
+                    userName = R.string.jaesung
+                )
+            }
+            item {
+                FollowerHeader(modifier = Modifier, followers = "40")
+            }
+            items(10) {
+                FollowerContent(modifier = Modifier.padding(8.dp))
+                Divider(
+                    thickness = 1.dp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+            }
         }
     }
 }
