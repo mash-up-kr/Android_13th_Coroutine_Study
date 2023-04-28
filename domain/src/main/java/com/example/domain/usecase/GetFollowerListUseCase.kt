@@ -11,6 +11,5 @@ import javax.inject.Inject
 class GetFollowerListUseCase @Inject constructor(
     private val userRepository: UserRepository
 ) {
-
     operator fun invoke(userName: String) = userRepository.getFollowerList(userName)
 }

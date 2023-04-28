@@ -6,10 +6,10 @@ import javax.inject.Inject
 /**
  * CoroutineStudy
  * @author jaesung
- * @created 2023/04/24
+ * @created 2023/04/27
  */
-class GetUserInfoUseCase @Inject constructor(
+class SearchUserUseCase @Inject constructor(
     private val userRepository: UserRepository,
 ) {
-    operator fun invoke(userName: String) = userRepository.getUserInfo(userName)
+    operator fun invoke(query: String) = userRepository.searchUser(query)
 }
