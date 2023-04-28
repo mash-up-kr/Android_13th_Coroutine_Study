@@ -30,7 +30,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             MashUpCoroutineStudyApp()
         }
-        viewModel.combineUserInfoWithFollowers()
+        viewModel.searchUser("JaesungLeee")
         observeStateFlow()
     }
 

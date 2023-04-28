@@ -16,4 +16,11 @@ data class SearchItemUiModel(
     val login: String = "",
 )
 
+fun Search.toPresentation() = SearchUiModel(
+    totalCount = totalCount, items = items.map {
+        SearchItemUiModel(
+            login = it.login
+        )
+    }
+)
 
