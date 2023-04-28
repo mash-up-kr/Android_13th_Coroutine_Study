@@ -14,7 +14,7 @@ class AuthInterceptor : Interceptor {
     override fun intercept(chain: Interceptor.Chain): Response {
         val request = chain.request().newBuilder().apply {
             header("X-Github-Api-Version", "2022-11-28")
-            header("Authorization", BuildConfig.GITHUB_API_KEY)
+            header("Authorization", "Bearer ${BuildConfig.GITHUB_API_KEY}")
         }.build()
 
         return chain.proceed(request)
