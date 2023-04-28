@@ -26,6 +26,10 @@ class MainViewModel @Inject constructor(
 
     private val _selectedItem: MutableStateFlow<SearchModel> = MutableStateFlow(SearchModel())
     val selectedItem = _selectedItem.asStateFlow()
+
+    private val _isSeleceted: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val isSeleceted = _isSeleceted.asStateFlow()
+
     fun searchUser() {
         _isLoading.value = true
         viewModelScope.launch {
@@ -46,6 +50,7 @@ class MainViewModel @Inject constructor(
 
     fun selectItem(item: SearchModel) {
         _selectedItem.value = item
+        _isSeleceted.value = true
     }
 
     fun setQuery(q: String) {

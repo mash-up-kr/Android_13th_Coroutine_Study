@@ -61,6 +61,7 @@
 
         <ImageView
             android:id="@+id/iv_selected_user"
+            bindImage="@{vm.selectedItem.avatarUrl}"
             android:layout_width="80dp"
             android:layout_height="80dp"
             android:layout_marginTop="15dp"
@@ -75,6 +76,7 @@
             android:layout_height="wrap_content"
             android:layout_marginTop="5dp"
             android:gravity="center"
+            android:text="@{vm.selectedItem.name}"
             android:textColor="@color/black"
             android:textSize="18dp"
             android:textStyle="bold"
@@ -85,36 +87,39 @@
 
         <TextView
             android:id="@+id/tv_follower_count"
+            bindFollower="@{vm.selectedItem.followerCount}"
+            bindVisibility="@{vm.isSeleceted}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-10dp"
             android:layout_marginTop="5dp"
-            android:text="팔로워 수: "
+            app:layout_constraintEnd_toEndOf="@id/iv_selected_user"
             app:layout_constraintStart_toStartOf="@id/iv_selected_user"
             app:layout_constraintTop_toBottomOf="@id/tv_selected_user" />
 
         <TextView
             android:id="@+id/tv_following_count"
+            bindFollowing="@{vm.selectedItem.followingCount}"
+            bindVisibility="@{vm.isSeleceted}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="-10dp"
             android:layout_marginTop="5dp"
-            android:text="팔로잉 수: "
+            app:layout_constraintEnd_toEndOf="@id/iv_selected_user"
             app:layout_constraintStart_toStartOf="@id/iv_selected_user"
             app:layout_constraintTop_toBottomOf="@id/tv_follower_count" />
 
         <TextView
             android:id="@+id/tv_follow_type"
+            bindVisibility="@{vm.isSeleceted}"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginEnd="20dp"
+            android:text="팔로워"
             android:textColor="@color/black"
             android:textSize="15dp"
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@id/tv_following_count"
-            tools:text="팔로워" />
+            app:layout_constraintTop_toBottomOf="@id/tv_following_count" />
 
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_follow_list"
@@ -123,7 +128,6 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tv_follow_type"
             tools:listitem="@layout/item_follow_user" />
-
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
