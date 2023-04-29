@@ -13,6 +13,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -22,11 +23,12 @@ import com.example.presentation.ui.theme.BasePurple
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
 fun CircleProfile(
+    modifier: Modifier = Modifier,
     userName: String,
     imageUrl: String,
     size: Int = 96,
 ) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+    Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
         GlideImage(
             model = imageUrl,
             contentDescription = userName,
@@ -44,8 +46,8 @@ fun CircleProfile(
         Text(
             text = userName,
             style = MaterialTheme.typography.body2,
-            maxLines = 1,
-            modifier = Modifier.paddingFromBaseline(top = 24.dp)
+            modifier = Modifier.paddingFromBaseline(top = 24.dp,),
+            textAlign = TextAlign.Center
         )
     }
 }

@@ -4,6 +4,7 @@ import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
@@ -24,20 +25,21 @@ fun UserRowItem(modifier: Modifier = Modifier, item: UserInfoModel) {
 
     Row(modifier = modifier) {
         CircleProfile(
+            modifier = Modifier.width(74.dp),
             userName = item.userInfo.name,
             imageUrl = item.userInfo.profileImageUrl,
-            size = 74
+            size = 74,
         )
 
         Column(modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp, bottom = 0.dp)) {
-            Text(text = "레포지토리 수: 000개")
-            Text(text = "팔로워 00명")
-            Text(text = "블로그: https://m1nzi.tistory.com")
+            Text(text = "레포지토리 수: ${item.userInfo.repositoryCount}개")
+            Text(text = "팔로워 ${item.followerList.size}명")
+            Text(text = "블로그: ${item.userInfo.blogLink}")
             ClickableText(
                 text = AnnotatedString("Github 바로가기"),
                 onClick = {
                     try {
-                        uriHandler.openUri("https://m1nzi.tistory.com")
+                        uriHandler.openUri("https://github.com/${item.userInfo.id}")
                     } catch (e: Exception) {
                         Toast.makeText(context, "올바르지 않은 url 입니다.", Toast.LENGTH_SHORT).show()
                     }

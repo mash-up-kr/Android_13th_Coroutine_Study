@@ -8,17 +8,26 @@ import javax.inject.Inject
 
 class GithubMapper @Inject constructor() {
     fun mapToEntity(spec: SearchResponse.Item) = User(
+        id = spec.login ?: "",
         name = spec.login ?: "",
-        profileImageUrl = ""
+        profileImageUrl = "",
+        repositoryCount = 0,
+        blogLink = "",
     )
 
     fun mapToEntity(spec: UserResponse?) = User(
+        id = spec?.login ?: "",
         name = spec?.name ?: "",
-        profileImageUrl = spec?.avatarUrl ?: ""
+        profileImageUrl = spec?.avatarUrl ?: "",
+        repositoryCount = spec?.publicRepos ?: 0,
+        blogLink = spec?.blog ?: "",
     )
 
     fun mapToEntity(spec: FollowerResponse) = User(
+        id = spec.login ?: "",
         name = spec.login ?: "",
-        profileImageUrl = spec.avatarUrl ?: ""
+        profileImageUrl = spec.avatarUrl ?: "",
+        repositoryCount = 0,
+        blogLink = "",
     )
 }
