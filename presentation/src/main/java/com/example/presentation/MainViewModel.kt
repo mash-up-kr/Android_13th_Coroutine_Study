@@ -18,7 +18,7 @@ class MainViewModel @Inject constructor(
     private val getSearchModelUseCase: GetSearchModelUseCase
 ) : ViewModel() {
 
-    var lastQuery = ""
+    private var lastQuery = ""
 
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow(" ")
 
