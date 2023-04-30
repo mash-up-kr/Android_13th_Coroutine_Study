@@ -11,6 +11,7 @@ data class UserUiModel(
     val login: String = "",
     val avatarUrl: String = "",
     val blog: String = "",
+    val publicRepositoryCount: Int = -1,
     val followers: Int = -1,
 )
 
@@ -19,4 +20,5 @@ fun User.toPresentation() = UserUiModel(
     avatarUrl = avatarUrl,
     blog = blog,
     followers = followers,
+    publicRepositoryCount = publicRepositoryCount,
 )

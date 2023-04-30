@@ -74,6 +74,8 @@ class MainViewModel @Inject constructor(
                     userName = user.login,
                     avatarUrl = user.avatarUrl,
                     followerCount = user.followers,
+                    blogUrl = user.blog,
+                    publicRepositoryCount = user.publicRepositoryCount,
                     followers = followers.map { follower ->
                         SearchUiState.Follower(
                             userName = follower.login,

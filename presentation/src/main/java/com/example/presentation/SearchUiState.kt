@@ -9,6 +9,8 @@ data class SearchUiState(
     val userName: String = "",
     val avatarUrl: String = "",
     val followerCount: Int = -1,
+    val blogUrl: String = "",
+    val publicRepositoryCount: Int = -1,
     val followers: List<Follower> = listOf(),
 ) {
     data class Follower(

@@ -107,6 +107,8 @@ fun UserInfoContent(
                 modifier = Modifier.padding(16.dp),
                 imageUrl = user.avatarUrl,
                 userName = user.userName,
+                blogUrl = user.blogUrl,
+                repoCount = user.publicRepositoryCount
             )
         }
         item {

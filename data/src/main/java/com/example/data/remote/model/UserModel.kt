@@ -47,4 +47,5 @@ internal fun UserModel.toDomain() = User(
     avatarUrl = avatarUrl,
     blog = blog,
     followers = followers,
+    publicRepositoryCount = publicRepos,
 )

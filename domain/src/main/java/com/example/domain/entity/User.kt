@@ -9,5 +9,6 @@ data class User(
     val login: String,
     val avatarUrl: String,
     val blog: String,
+    val publicRepositoryCount: Int,
     val followers: Int,
 )
