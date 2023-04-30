@@ -6,11 +6,9 @@ import com.example.data.remote.response.search.Item
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.stateIn
 import model.SearchModel
 import repository.GitHubRepository
 import javax.inject.Inject
@@ -22,8 +20,8 @@ class GitHubRepositoryImpl @Inject constructor(
     @OptIn(FlowPreview::class)
     override fun getSearchModel(query: String): Flow<ResultWrapper<Any, Any>> = flow {
         with(gitHubDataSource) {
-            searchUsers(query).catch {
-                emit(ResultWrapper.Fail("SearchError[searchUsers]"))
+            searchUsers(query).catch { e ->
+                emit(ResultWrapper.Fail("SearchError[searchUsers]: $e"))
             }.flatMapMerge { searchUserResponse ->
                 combineSearchList(searchUserResponse.items ?: emptyList())
             }.collect {
@@ -38,8 +36,8 @@ class GitHubRepositoryImpl @Inject constructor(
         list.forEach { user ->
             gitHubDataSource.run {
                 getFollowers(user.login ?: DEFAULT_STRING)
-                    .catch {
-                        emit(ResultWrapper.Fail("CombineError[getFollowers]"))
+                    .catch { e ->
+                        emit(ResultWrapper.Fail("CombineError[getFollowers]: $e"))
                     }.combine(getUser(user.login ?: DEFAULT_STRING)) { follower, userInfo ->
                         SearchModel(
                             name = userInfo.login ?: DEFAULT_STRING,
@@ -54,13 +52,13 @@ class GitHubRepositoryImpl @Inject constructor(
                                 )
                             }
                         )
-                    }.catch {
-                        emit(ResultWrapper.Fail("CombineError[getUser]"))
+                    }.catch { e ->
+                        emit(ResultWrapper.Fail("CombineError[getUser]: $e"))
                     }.collect { model ->
                         with(fetchedList) {
                             add(model)
                             if (size == count) {
-                                emit(ResultWrapper.Success(fetchedList.toList()))
+                                emit(ResultWrapper.Success(fetchedList))
                             }
                         }
                     }

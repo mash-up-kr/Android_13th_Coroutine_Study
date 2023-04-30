@@ -2,10 +2,9 @@ package com.example.presentation.adapter
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.databinding.DataBindingUtil
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
-import com.example.presentation.R
+import com.example.presentation.databinding.ItemSerachUserBinding
 import com.example.presentation.holder.SearchViewHolder
 import model.SearchModel
 
@@ -15,13 +14,8 @@ class SearchListAdapter(
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SearchViewHolder {
         return SearchViewHolder(
-            DataBindingUtil.inflate(
-                LayoutInflater.from(parent.context),
-                R.layout.item_serach_user,
-                parent,
-                false
-            ),
-            itemClickListener
+            ItemSerachUserBinding.inflate(LayoutInflater.from(parent.context), parent, false),
+            itemClickListener,
         )
     }
 
