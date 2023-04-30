@@ -35,7 +35,7 @@ class MainActivity : AppCompatActivity() {
         setOnClickListener()
         observeSearchState()
     }
-    
+
     private fun observeSearchState() = with(binding) {
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
