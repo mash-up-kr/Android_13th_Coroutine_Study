@@ -3,9 +3,12 @@ package com.example.data.repository
 import ResultWrapper
 import com.example.data.remote.datasource.GitHubDataSource
 import com.example.data.remote.response.search.Item
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapMerge
 import kotlinx.coroutines.flow.flow
@@ -18,24 +21,24 @@ class GitHubRepositoryImpl @Inject constructor(
 ) : GitHubRepository {
 
     @OptIn(FlowPreview::class)
-    override fun getSearchModel(query: String): Flow<ResultWrapper<Any, Any>> = flow {
+    override fun getSearchModel(query: String): Flow<ResultWrapper<Any, Any>> = channelFlow {
         gitHubDataSource.searchUsers(query).catch { e ->
-            emit(ResultWrapper.Fail("SearchError[searchUsers]: $e"))
+            send(ResultWrapper.Fail("SearchError[searchUsers]: $e"))
         }.flatMapMerge { searchUserResponse ->
             combineSearchList(searchUserResponse.items ?: emptyList())
         }.collect {
-            emit(it)
+            send(it)
         }
     }
 
-    private fun combineSearchList(list: List<Item>) = flow {
+    private fun combineSearchList(list: List<Item>) = channelFlow {
         val count = list.size
         val fetchedList = mutableListOf<SearchModel>()
         list.forEach { user ->
             gitHubDataSource.run {
                 getFollowers(user.login ?: DEFAULT_STRING)
                     .catch { e ->
-                        emit(ResultWrapper.Fail("CombineError[getFollowers]: $e"))
+                        send(ResultWrapper.Fail("CombineError[getFollowers]: $e"))
                     }.combine(getUser(user.login ?: DEFAULT_STRING)) { follower, userInfo ->
                         SearchModel(
                             name = userInfo.login ?: DEFAULT_STRING,
@@ -51,12 +54,12 @@ class GitHubRepositoryImpl @Inject constructor(
                             }
                         )
                     }.catch { e ->
-                        emit(ResultWrapper.Fail("CombineError[getUser]: $e"))
+                        send(ResultWrapper.Fail("CombineError[getUser]: $e"))
                     }.collect { model ->
                         with(fetchedList) {
                             add(model)
                             if (size == count) {
-                                emit(ResultWrapper.Success(fetchedList))
+                                send(ResultWrapper.Success(fetchedList))
                             }
                         }
                     }
