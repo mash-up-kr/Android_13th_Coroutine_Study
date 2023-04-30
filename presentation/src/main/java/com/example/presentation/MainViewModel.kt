@@ -67,7 +67,6 @@ class MainViewModel @Inject constructor(
             }
         }
     }
-
     fun selectItem(item: SearchModel) {
         selectedItem.value = item
         isSeleceted.value = true
@@ -76,6 +75,8 @@ class MainViewModel @Inject constructor(
     fun setQuery(query: String) {
         searchQuery.value = query
     }
+
+    fun getSearchQuery() = searchQuery.value
 }
 
 data class UiModel(

@@ -19,14 +19,12 @@ class GitHubRepositoryImpl @Inject constructor(
 
     @OptIn(FlowPreview::class)
     override fun getSearchModel(query: String): Flow<ResultWrapper<Any, Any>> = flow {
-        with(gitHubDataSource) {
-            searchUsers(query).catch { e ->
-                emit(ResultWrapper.Fail("SearchError[searchUsers]: $e"))
-            }.flatMapMerge { searchUserResponse ->
-                combineSearchList(searchUserResponse.items ?: emptyList())
-            }.collect {
-                emit(it)
-            }
+        gitHubDataSource.searchUsers(query).catch { e ->
+            emit(ResultWrapper.Fail("SearchError[searchUsers]: $e"))
+        }.flatMapMerge { searchUserResponse ->
+            combineSearchList(searchUserResponse.items ?: emptyList())
+        }.collect {
+            emit(it)
         }
     }
 

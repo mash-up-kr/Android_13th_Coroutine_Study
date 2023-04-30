@@ -55,7 +55,9 @@ class MainActivity : AppCompatActivity() {
             rvFollowList.adapter = followerAdapter
             etSearch.doOnTextChanged { text, _, _, _ -> mainViewModel.setQuery(text.toString()) }
             btnSearch.setOnClickListener {
-                mainViewModel.searchUser(etSearch.text.toString())
+                if (mainViewModel.getSearchQuery().isNotBlank()) {
+                    mainViewModel.searchUser(etSearch.text.toString())
+                }
             }
         }
     }
