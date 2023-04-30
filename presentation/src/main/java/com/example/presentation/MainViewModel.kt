@@ -18,6 +18,8 @@ class MainViewModel @Inject constructor(
     private val getSearchModelUseCase: GetSearchModelUseCase
 ) : ViewModel() {
 
+    var lastQuery = ""
+
     private val searchQuery: MutableStateFlow<String> = MutableStateFlow(" ")
 
     private val selectedItem = MutableStateFlow(SearchModel())
@@ -59,14 +61,20 @@ class MainViewModel @Inject constructor(
     )
 
     fun searchUser(query: String) {
-        isLoading.value = true
-        viewModelScope.launch {
-            getSearchModelUseCase(query).collect { result ->
-                searchResult.value = result
-                isLoading.value = false
+        if (lastQuery == query) {
+            return
+        } else {
+            lastQuery = query
+            isLoading.value = true
+            viewModelScope.launch {
+                getSearchModelUseCase(query).collect { result ->
+                    searchResult.value = result
+                    isLoading.value = false
+                }
             }
         }
     }
+
     fun selectItem(item: SearchModel) {
         selectedItem.value = item
         isSeleceted.value = true
