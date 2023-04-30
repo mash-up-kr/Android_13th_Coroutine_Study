@@ -14,12 +14,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.example.presentation.DetailActivity
 import com.example.presentation.MainViewModel
 import com.example.presentation.home.crew.StudyCrewList
 import com.example.presentation.home.user.UserRowItem
@@ -103,9 +105,16 @@ fun LoadingContent(modifier: Modifier = Modifier) {
 
 @Composable
 fun SuccessContent(modifier: Modifier = Modifier, searchResult: List<UserInfoModel>) {
+    val context = LocalContext.current
+
     LazyColumn(modifier = modifier) {
         items(searchResult) {
-            UserRowItem(modifier = Modifier.fillMaxWidth(), it)
+            UserRowItem(modifier = Modifier.fillMaxWidth(), item = it, onItemClick = {
+                DetailActivity.getIntent(context, it).also { intent ->
+                    context.startActivity(intent)
+                }
+            })
+
             Divider(thickness = 1.dp, modifier = Modifier.padding(vertical = 8.dp))
         }
     }

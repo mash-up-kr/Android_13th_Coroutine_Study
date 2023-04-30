@@ -1,6 +1,7 @@
 package com.example.presentation.home.user
 
 import android.widget.Toast
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
@@ -19,11 +20,11 @@ import com.example.presentation.home.common.CircleProfile
 import com.example.presentation.model.UserInfoModel
 
 @Composable
-fun UserRowItem(modifier: Modifier = Modifier, item: UserInfoModel) {
+fun UserRowItem(modifier: Modifier = Modifier, item: UserInfoModel, onItemClick: (UserInfoModel) -> Unit) {
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
 
-    Row(modifier = modifier) {
+    Row(modifier = modifier.clickable { onItemClick(item) }) {
         CircleProfile(
             modifier = Modifier.width(74.dp),
             userName = item.userInfo.name,

@@ -6,6 +6,7 @@ import com.example.domain.usecase.GetFollowerListUseCase
 import com.example.domain.usecase.GetUserInfoUseCase
 import com.example.domain.usecase.SearchUsersUseCase
 import com.example.presentation.model.SearchState
+import com.example.presentation.model.UserInfoMapper
 import com.example.presentation.model.UserInfoModel
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.FlowPreview
@@ -19,6 +20,7 @@ class MainViewModel @Inject constructor(
     private val searchUsersUseCase: SearchUsersUseCase,
     private val getUserInfoUseCase: GetUserInfoUseCase,
     private val getFollowerListUseCase: GetFollowerListUseCase,
+    private val mapper: UserInfoMapper,
 ) : ViewModel() {
     val keyword = MutableStateFlow("")
 
@@ -64,8 +66,8 @@ class MainViewModel @Inject constructor(
 
                     userInfoFlow.combine(followerListFlow) { userInfo, followerList ->
                         UserInfoModel(
-                            userInfo = userInfo,
-                            followerList = followerList
+                            userInfo = mapper.mapToModel(userInfo),
+                            followerList = followerList.map { mapper.mapToModel(it) }
                         )
                     }.catch {
                         handleError("검색 중 문제가 발생했습니다.")

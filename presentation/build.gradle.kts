@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.org.jetbrains.kotlin.android)
     alias(libs.plugins.hilt.plugin)
     alias(libs.plugins.kotlin.kapt)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -52,6 +53,7 @@ dependencies {
     implementation(libs.compose.bom)
     implementation(libs.activity.compose)
     implementation(libs.ui.tooling.preview)
+    implementation("com.google.android.material:material:1.4.0")
     debugImplementation(libs.ui.tooling)
     implementation(libs.foundation)
     implementation(libs.glide.compose)  // Compose 용
