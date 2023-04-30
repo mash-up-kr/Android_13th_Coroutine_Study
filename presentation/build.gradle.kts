@@ -49,11 +49,11 @@ dependencies {
     implementation(libs.material)
     implementation(libs.compose.bom)
     implementation(libs.lifecycle.compose.viewmodel)
-    implementation(libs.runtime.livedata)
     implementation(libs.activity.compose)
     implementation(libs.ui.tooling.preview)
     debugImplementation(libs.ui.tooling)
     implementation(libs.foundation)
+    implementation(libs.hilt.viewmodel)
     implementation(libs.glide.compose)  // Compose 용
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

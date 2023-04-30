@@ -27,8 +27,11 @@ class MainViewModel @Inject constructor(
     private val searchUserUseCase: SearchUserUseCase,
 ) : ViewModel() {
 
-    private val _uiStateFlow: MutableStateFlow<UiState> = MutableStateFlow(UiState.Loading)
-    val uiStateFlow: StateFlow<UiState> = _uiStateFlow.asStateFlow()
+    private val _searchResult: MutableStateFlow<UiState> = MutableStateFlow(UiState.Initial)
+    val searchResult: StateFlow<UiState> = _searchResult.asStateFlow()
+
+    private val _loadingFlow: MutableStateFlow<Boolean> = MutableStateFlow(false)
+    val loadingFlow: StateFlow<Boolean> = _loadingFlow.asStateFlow()
 
     private fun getUserInfo(userName: String): Flow<UserUiModel> =
         getUserInfoUseCase(userName).map { it.toPresentation() }
@@ -48,13 +51,16 @@ class MainViewModel @Inject constructor(
     @OptIn(FlowPreview::class)
     fun searchUser(userName: String) {
         viewModelScope.launch {
+            _loadingFlow.value = true
             searchUsers(userName).flatMapMerge { searchResult ->
                 val userNameList = searchResult.items.map { it.login }
                 combineUserInfoWithFollowers(userNameList)
             }.catch {
-                _uiStateFlow.value = UiState.Error(it.message ?: "Error")
+                _loadingFlow.value = false
+                _searchResult.value = UiState.Error(it.message ?: "Error")
             }.collect {
-                _uiStateFlow.value = UiState.Success(it)
+                _loadingFlow.value = false
+                _searchResult.value = UiState.Success(it)
             }
         }
     }
@@ -87,7 +93,7 @@ class MainViewModel @Inject constructor(
 }
 
 sealed class UiState {
-    object Loading : UiState()
+    object Initial : UiState()
     data class Success(val uiState: List<SearchUiState>) : UiState()
     data class Error(val errorMessage: String) : UiState()
 }

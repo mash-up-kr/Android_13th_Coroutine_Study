@@ -9,7 +9,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
@@ -22,10 +21,10 @@ import com.bumptech.glide.integration.compose.GlideImage
 
 @Composable
 @OptIn(ExperimentalGlideComposeApi::class)
-fun CircularImage(imageUrl: Int, userName: Int, size: Int = 96) {
+fun CircularImage(imageUrl: String, userName: String, size: Int = 96) {
     GlideImage(
-        model = stringResource(id = imageUrl),
-        contentDescription = stringResource(id = userName),
+        model = imageUrl,
+        contentDescription = userName,
         contentScale = ContentScale.Fit,
         modifier = Modifier
             .size(size.dp)

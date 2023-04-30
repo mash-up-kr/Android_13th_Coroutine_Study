@@ -12,6 +12,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.presentation.R
+import com.example.presentation.common.CircularImage
 import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 
 /**
@@ -20,7 +21,7 @@ import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
  * @created 2023/04/26
  */
 @Composable
-fun FollowerHeader(modifier: Modifier = Modifier, followers: String) {
+fun FollowerHeader(modifier: Modifier = Modifier, followers: Int) {
     Surface(
         modifier = modifier
             .fillMaxWidth()
@@ -37,27 +38,23 @@ fun FollowerHeader(modifier: Modifier = Modifier, followers: String) {
 }
 
 @Composable
-fun FollowerContent(modifier: Modifier = Modifier) {
+fun FollowerContent(
+    modifier: Modifier = Modifier,
+    imageUrl: String,
+    userName: String,
+) {
     Row(
         modifier = modifier.fillMaxWidth(),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        CircularImage(imageUrl = R.string.jaesung_url, userName = R.string.jaesung, size = 72)
+        CircularImage(imageUrl = imageUrl, userName = userName, size = 72)
         Column(modifier = Modifier.padding(start = 8.dp)) {
-            Text(text = "AAA")
+            Text(text = userName)
             Text(
                 text = "Github 바로가기",
                 color = Color.Blue,
                 modifier = Modifier.paddingFromBaseline(top = 24.dp)
             )
         }
-    }
-}
-
-@Preview
-@Composable
-private fun FollowerItemPreview() {
-    MashUpCoroutineStudyTheme {
-        FollowerHeader(followers = "30")
     }
 }

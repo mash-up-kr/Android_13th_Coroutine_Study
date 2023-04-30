@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.example.presentation.R
+import com.example.presentation.common.CircularImage
 import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 
 /**
@@ -21,8 +22,8 @@ import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
 
 @Composable
 fun UserInfo(
-    @StringRes imageUrl: Int,
-    @StringRes userName: Int,
+    imageUrl: String,
+    userName: String,
     modifier: Modifier = Modifier
 ) {
     Column(
@@ -31,7 +32,7 @@ fun UserInfo(
     ) {
         CircularImage(imageUrl = imageUrl, userName = userName)
         Text(
-            text = stringResource(id = userName),
+            text = userName,
             modifier = Modifier.paddingFromBaseline(top = 24.dp)
         )
         Spacer(modifier = Modifier.height(16.dp))
@@ -60,7 +61,7 @@ private fun UserInfoItem(
 private fun UserInfo() {
     MashUpCoroutineStudyTheme {
         Surface {
-            UserInfo(imageUrl = R.string.jaesung_url, userName = R.string.jaesung)
+//            UserInfo(imageUrl = R.string.jaesung_url, userName = R.string.jaesung)
         }
     }
 }

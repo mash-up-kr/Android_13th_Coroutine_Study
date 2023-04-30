@@ -1,7 +1,6 @@
 [versions]
 compose-bom = "2022.11.00"
-lifecycle-viewmodel-compose = "2.6.0-beta01"
-runtime-livedata = "1.4.2"
+lifecycle-viewmodel-compose = "2.5.1"
 activity-compose = "1.6.1"
 ui-tooling-preview = "1.3.1"
 ui-tooling = "1.3.1"
@@ -23,6 +22,7 @@ okHttp = "4.10.0"
 moshi = "1.14.0"
 coroutine = "1.6.4"
 java-inject = "1"
+hilt-viewmodel = "1.0.0"
 
 workmanger = "1.0.0"
 
@@ -38,10 +38,10 @@ foundation = { group = "androidx.compose.foundation", name = "foundation" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
 lifecycle-compose-viewmodel = { group = "androidx.lifecycle", name = "lifecycle-viewmodel-compose", version.ref = "lifecycle-viewmodel-compose" }
-runtime-livedata = { group = "androidx.compose.runtime", name = "runtime-livedata", version.ref = "runtime-livedata" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-viewmodel = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-viewmodel" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converterMoshi = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
