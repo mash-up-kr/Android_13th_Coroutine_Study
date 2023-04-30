@@ -12,11 +12,11 @@ data class UserResponse(
     @Json(name = "blog")
     val blog: String?,
     @Json(name = "company")
-    val company: Any?,
+    val company: String?,
     @Json(name = "created_at")
     val createdAt: String?,
     @Json(name = "email")
-    val email: Any?,
+    val email: String?,
     @Json(name = "events_url")
     val eventsUrl: String?,
     @Json(name = "followers")
