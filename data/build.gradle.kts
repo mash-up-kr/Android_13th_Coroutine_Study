@@ -1,3 +1,5 @@
+import com.android.build.gradle.internal.cxx.configure.gradleLocalProperties
+
 plugins {
     alias(libs.plugins.com.android.library)
     alias(libs.plugins.org.jetbrains.kotlin.android)
@@ -12,7 +14,7 @@ android {
     defaultConfig {
         minSdk = 24
         targetSdk = 33
-
+        buildConfigField("String", "API_KEY", gradleLocalProperties(rootDir).getProperty("GitToken"))
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 

@@ -1,18 +1,15 @@
-package com.example.presentation.home
+package com.example.presentation.userInfo
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material.Divider
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.saveable.rememberSaveable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
@@ -20,14 +17,13 @@ import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
 import com.bumptech.glide.integration.compose.GlideImage
-import com.example.presentation.model.MashUpCrew
 import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
+import model.User
 
 /**
  * CoroutineStudy
@@ -55,51 +51,66 @@ val colors = listOf(
 )
 
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    val studyCrewList = MashUpCrew.values().toList()
-    val currentStudyCrewIndex = rememberSaveable { mutableStateOf(0) }
-    LazyColumn(modifier = modifier.padding(8.dp)) {
+fun UserInfoRoute(
+    modifier: Modifier = Modifier,
+    user: User,
+) {
+    UserInfoScreen(
+        userState = user,
+    )
+}
+
+@Composable
+fun UserInfoScreen(
+    modifier: Modifier = Modifier,
+    userState: User?,
+) {
+    LazyColumn(modifier = modifier) {
         item {
-            StudyCrewList(studyCrewList = studyCrewList, modifier = Modifier)
-        }
-        item {
-            Divider(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .height(1.dp),
+            StudyCrewDetail(
+                userName = userState?.login ?: "",
+                imageUrl = userState?.avatarUrl ?: "",
+                repoCount = userState?.public_repos ?: 0,
+                blogLink = userState?.blog ?: "",
+                followers = userState?.followers ?: 0,
             )
-        }
-        item {
-            val currentStudyCrew = studyCrewList[currentStudyCrewIndex.value]
-            StudyCrewDetail(userName = currentStudyCrew.userName, imageUrl = currentStudyCrew.profileImage)
         }
 
-        items(studyCrewList) {
-            StudyCrewFollowerItem(
-                modifier = Modifier.fillMaxWidth().height(96.dp),
-                followerName = it.name,
-                imageUrl = "",
-                gitHubList = "깃 링크다 이녀석아",
-            )
-            Divider(
-                modifier = Modifier.fillMaxWidth().height(1.dp),
-            )
+        userState?.followersList?.let { userList ->
+            items(userList) {
+                StudyCrewFollowerItem(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(96.dp),
+                    followerName = it.login ?: "",
+                    imageUrl = it.avatarUrl ?: "",
+                    gitHubList = it.url ?: "",
+                )
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .height(1.dp),
+                )
+            }
         }
     }
 }
 
 @Composable
 fun StudyCrewDetail(
-    @StringRes userName: Int,
-    @StringRes imageUrl: Int,
+    userName: String,
+    imageUrl: String,
+    repoCount: Int,
+    blogLink: String,
+    followers: Int,
 ) {
     Column(
-        horizontalAlignment = Alignment.CenterHorizontally
+        horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        StudyCrew(userName = userName, imageUrl = stringResource(id = imageUrl), size = 96.dp)
-        StudyCrewRepositoryCount(count = 0)
-        StudyCrewBlogLink(blogLink = "")
-        StudyCrewFollower(2)
+        StudyCrew(userName = userName, imageUrl = imageUrl, size = 96.dp, onClick = {})
+        StudyCrewRepositoryCount(count = repoCount)
+        StudyCrewBlogLink(blogLink = blogLink)
+        StudyCrewFollower(followers)
     }
 }
 
@@ -123,7 +134,8 @@ fun StudyCrewFollower(
 ) {
     Row(
         modifier = Modifier
-            .fillMaxSize().height(48.dp)
+            .fillMaxSize()
+            .height(48.dp)
             .border(
                 width = 2.dp,
                 brush = Brush.verticalGradient(
@@ -169,27 +181,19 @@ fun StudyCrewFollowerItem(
 }
 
 @Composable
-fun StudyCrewList(
-    studyCrewList: List<MashUpCrew>,
-    modifier: Modifier = Modifier,
-) {
-    LazyRow(modifier = modifier) {
-        items(studyCrewList) {
-            StudyCrew(userName = it.userName, imageUrl = stringResource(id = it.profileImage), modifier = modifier, size = 96.dp)
-        }
-    }
-}
-
-@Composable
 fun StudyCrew(
-    @StringRes userName: Int,
+    userName: String,
     imageUrl: String,
     modifier: Modifier = Modifier,
     size: Dp,
+    onClick: (String) -> Unit,
 ) {
     Column(
+        modifier = modifier.padding(8.dp).clickable {
+            onClick(userName)
+        },
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(8.dp),
+
     ) {
         CrewImage(
             modifier = Modifier.size(size),
@@ -197,7 +201,7 @@ fun StudyCrew(
         )
 
         Text(
-            text = stringResource(id = userName),
+            text = userName,
             style = MaterialTheme.typography.body2,
             maxLines = 1,
             modifier = Modifier.paddingFromBaseline(top = 24.dp),

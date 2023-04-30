@@ -1,4 +1,4 @@
-package com.example.data.remote.response.follower
+package com.example.data.source.remote.response.follower
 
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass

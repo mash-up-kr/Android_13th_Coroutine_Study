@@ -1,6 +1,6 @@
-package com.example.data.remote
+package com.example.data.source.remote.api
 
-import com.example.data.remote.response.repo.GitHubRepoResponse
+import com.example.data.source.remote.response.repo.GitHubRepoResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 
