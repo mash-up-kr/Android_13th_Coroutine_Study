@@ -73,6 +73,7 @@ data class UserResponse(
 ) {
     fun toDomain(): User = User(
         name = name ?: "",
+        imageUrl = avatarUrl ?: "",
         blogUrl = blog ?: "",
         repoCnt = publicRepos ?: 0,
         followerCnt = followers ?: 0,

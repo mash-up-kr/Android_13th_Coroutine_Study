@@ -1,9 +1,11 @@
 package com.example.presentation
 
 import android.content.Context
+import androidx.compose.runtime.mutableStateListOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.domain.UserPageRepository
+import com.example.domain.model.Follower
 import com.example.domain.model.UserPage
 import com.example.presentation.model.MashUpCrew
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -20,8 +22,12 @@ class HomeViewModel @Inject constructor(
     @ApplicationContext private val context: Context
 ) : ViewModel() {
 
-    private val _userPage = MutableStateFlow<UserPage?>(null)
-    val userPage: StateFlow<UserPage?> = _userPage
+    private val _userPages = MutableStateFlow(mutableStateListOf<UserPage>())
+    val userPages: StateFlow<List<UserPage>> = _userPages
+
+    fun findFollowers(userName: String): List<Follower>? {
+        return _userPages.value.firstOrNull { it.user.name == userName }?.followers
+    }
 
     init {
         val userName = context.resources.getString(MashUpCrew.MASHUP.userName)
@@ -29,18 +35,20 @@ class HomeViewModel @Inject constructor(
     }
 
     fun getUserPageInfo(userName: String) {
+        _userPages.value.clear()
         viewModelScope.launch(Dispatchers.IO) {
             runCatching {
                 userPageRepository.getUserPageInfo(userName)
             }.onSuccess {
-                it.collect {
-                    _userPage.value = it
+                it.collect { userPage ->
+                    _userPages.value.add(userPage)
                 }
             }.onFailure {
-                _userPage.value = null
+                _userPages.value.clear()
             }
 
         }
     }
+
 
 }
