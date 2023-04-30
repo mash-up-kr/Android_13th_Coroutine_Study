@@ -1,0 +1,83 @@
+package com.example.presentation.adapter
+
+import android.graphics.Bitmap
+import android.graphics.drawable.Drawable
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
+import com.bumptech.glide.request.target.CustomTarget
+import com.bumptech.glide.request.transition.Transition
+import com.example.presentation.R
+import com.example.presentation.databinding.ItemFollowerUserBinding
+import model.FollowerInfoResponse
+
+
+class FollowerDetailAdapter: ListAdapter<FollowerInfoResponse, FollowerDetailAdapter.ViewHolder>(
+    diffUtil
+) {
+
+    private lateinit var onItemClickListener: OnItemClickListener
+
+    fun followerItemClickListener(listener: OnItemClickListener){
+        this.onItemClickListener = listener
+    }
+
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
+        return ViewHolder(
+            ItemFollowerUserBinding.inflate(
+                LayoutInflater.from(parent.context),
+                parent,
+                false
+            )
+        )
+    }
+
+    override fun onBindViewHolder(holder: ViewHolder, position: Int) {
+        holder.bind(getItem(position))
+    }
+
+
+    inner class ViewHolder(private val binding: ItemFollowerUserBinding): RecyclerView.ViewHolder(binding.root) {
+        fun bind(item: FollowerInfoResponse) = with(binding){
+            userName.text = item.login
+            binding.githubUrl.setOnClickListener {
+                item.htmlUrl?.let { url -> onItemClickListener.gitUrlClickListener(url) }
+            }
+
+            Glide.with(root)
+                .asBitmap()
+                .load(item.avatarUrl)
+                .circleCrop()
+                .into(object : CustomTarget<Bitmap>() {
+                    override fun onResourceReady(
+                        resource: Bitmap,
+                        transition: Transition<in Bitmap>?
+                    ) {
+                        userProfile.setImageBitmap(resource)
+                        userProfile.setBackgroundResource(R.drawable.bg_user_profile)
+                    }
+
+                    override fun onLoadCleared(placeholder: Drawable?) {}
+                })
+
+        }
+    }
+
+    companion object {
+        val diffUtil = object : DiffUtil.ItemCallback<FollowerInfoResponse>() {
+            override fun areContentsTheSame(oldItem: FollowerInfoResponse, newItem: FollowerInfoResponse) =
+                oldItem == newItem
+
+            override fun areItemsTheSame(oldItem: FollowerInfoResponse, newItem: FollowerInfoResponse) =
+                oldItem.login == newItem.login
+        }
+    }
+
+    interface OnItemClickListener{
+        fun gitUrlClickListener(githubUrl: String)
+    }
+
+}
