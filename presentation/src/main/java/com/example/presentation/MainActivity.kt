@@ -100,12 +100,14 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setLoadingVisibility(state: UiState) {
-        if (state is UiState.Loading) {
-            binding.btnSearch.isVisible = false
-            binding.pbSearch.isVisible = true
-        } else {
-            binding.btnSearch.isVisible = true
-            binding.pbSearch.isVisible = false
+        with(binding) {
+            if (state is UiState.Loading) {
+                btnSearch.isVisible = false
+                pbSearch.isVisible = true
+            } else {
+                btnSearch.isVisible = true
+                pbSearch.isVisible = false
+            }
         }
     }
 
