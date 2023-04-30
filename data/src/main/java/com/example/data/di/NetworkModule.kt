@@ -2,15 +2,18 @@ package com.example.data.di
 
 import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
-import com.example.data.remote.FollowerService
-import com.example.data.remote.RepoService
-import com.example.data.remote.UserService
+import com.example.data.source.remote.NetworkInterceptor
+import com.example.data.source.remote.api.FollowerService
+import com.example.data.source.remote.api.RepoService
+import com.example.data.source.remote.api.SearchService
+import com.example.data.source.remote.api.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -42,11 +45,19 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideNetWorkInterceptor(): Interceptor {
+        return NetworkInterceptor()
+    }
+
+    @Singleton
+    @Provides
     fun provideClient(
+        networkInterceptor: Interceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
+            .addInterceptor(networkInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(
                 TIME_OUT_POLICY,
@@ -85,5 +96,11 @@ object NetworkModule {
     @Provides
     fun provideFollowerService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchService(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
     }
 }
