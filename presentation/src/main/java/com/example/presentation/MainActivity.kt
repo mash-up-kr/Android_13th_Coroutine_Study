@@ -1,5 +1,7 @@
 package com.example.presentation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.Toast
@@ -34,7 +36,9 @@ class MainActivity : AppCompatActivity() {
     }
     private val followerAdapter: FollowerListAdapter by lazy {
         FollowerListAdapter(
-            gitHubLinkClickListener = { link -> }
+            gitHubLinkClickListener = { link ->
+                onGitHubLinkClick(link)
+            }
         )
     }
 
@@ -111,7 +115,10 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun onGitHubLinkClick(link: String) {
-
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(link)
+        }
+        startActivity(intent)
     }
 }
 
