@@ -22,12 +22,14 @@ okHttp = "4.10.0"
 moshi = "1.14.0"
 coroutine = "1.6.4"
 java-inject = "1"
-
 workmanger = "1.0.0"
+navigation-compose = "2.5.3"
+gson = "2.10.1"
+hilt-navigation-compose = "1.0.0"
 
 [libraries]
 
-workTemp = {group = "androidx.hilt", name = "hilt-compiler", version.ref = "workmanger" }
+workTemp = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "workmanger" }
 compose-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
 activity-compose = { group = "androidx.activity", name = "activity-compose", version.ref = "activity-compose" }
 ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview", version.ref = "ui-tooling-preview" }
@@ -36,9 +38,12 @@ material = { group = "androidx.compose.material", name = "material", version.ref
 foundation = { group = "androidx.compose.foundation", name = "foundation" }
 core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "core-ktx" }
 appcompat = { group = "androidx.appcompat", name = "appcompat", version.ref = "appcompat" }
+gson = { group = "com.google.code.gson", name = "gson", version.ref = "gson" }
+navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigation-compose" }
 
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-compiler", version.ref = "hilt" }
+hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt-navigation-compose" }
 
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 converterMoshi = { group = "com.squareup.retrofit2", name = "converter-scalars", version.ref = "retrofit" }
@@ -55,7 +60,7 @@ java-inject = { group = "javax.inject", name = "javax.inject", version.ref = "ja
 
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide-compose" }
 glide-view = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide-view" }
-glide-compiler = { group = "com.github.bumptech.glide", name = "copmiler", version.ref = "glide-view" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide-view" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
