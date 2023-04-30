@@ -1,9 +1,10 @@
 package com.example.data.di
 
+import com.example.data.common.AUTHORIZATION
 import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
 import com.example.data.remote.FollowerService
-import com.example.data.remote.RepoService
+import com.example.data.remote.SearchService
 import com.example.data.remote.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -11,6 +12,7 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -43,11 +45,18 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideClient(
-        httpLoggingInterceptor: HttpLoggingInterceptor,
+        httpLoggingInterceptor: HttpLoggingInterceptor
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
-            .addInterceptor(httpLoggingInterceptor)
+            .addNetworkInterceptor(httpLoggingInterceptor)
+            .addInterceptor((Interceptor { chain ->
+                val request = chain.request().newBuilder()
+                    .addHeader("Authorization", "token $AUTHORIZATION")
+                    .build()
+
+                chain.proceed(request)
+            }))
             .connectTimeout(
                 TIME_OUT_POLICY,
                 TimeUnit.MILLISECONDS,
@@ -71,12 +80,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGitHubRepoService(retrofit: Retrofit): RepoService {
-        return retrofit.create(RepoService::class.java)
-    }
-
-    @Singleton
-    @Provides
     fun provideUserService(retrofit: Retrofit): FollowerService {
         return retrofit.create(FollowerService::class.java)
     }
@@ -85,5 +88,19 @@ object NetworkModule {
     @Provides
     fun provideFollowerService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchService(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
+    }
+
+    private val interceptor = Interceptor { chain ->
+        val request = chain.request().newBuilder()
+            .addHeader("Authorization", "token $AUTHORIZATION")
+            .build()
+
+        chain.proceed(request)
     }
 }
