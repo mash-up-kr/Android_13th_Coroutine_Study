@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.text.ClickableText
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
@@ -24,7 +25,7 @@ fun UserRowItem(modifier: Modifier = Modifier, item: UserInfoModel, onItemClick:
     val uriHandler = LocalUriHandler.current
     val context = LocalContext.current
 
-    Row(modifier = modifier.clickable { onItemClick(item) }) {
+    Row(modifier = modifier.clickable { onItemClick(item) }, verticalAlignment = Alignment.CenterVertically) {
         CircleProfile(
             modifier = Modifier.width(74.dp),
             userName = item.userInfo.name,
