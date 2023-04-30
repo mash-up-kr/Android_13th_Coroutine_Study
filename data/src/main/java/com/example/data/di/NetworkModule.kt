@@ -1,16 +1,18 @@
 package com.example.data.di
 
+import com.example.data.common.AUTH_TOKEN
 import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
-import com.example.data.remote.FollowerService
-import com.example.data.remote.RepoService
-import com.example.data.remote.UserService
+import com.example.data.remote.follower.FollowerService
+import com.example.data.remote.search.SearchService
+import com.example.data.remote.user.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -42,11 +44,26 @@ object NetworkModule {
 
     @Singleton
     @Provides
+    fun provideAuthInterceptor(): Interceptor {
+        return Interceptor { chain ->
+            chain.proceed(
+                chain.request()
+                    .newBuilder()
+                    .addHeader("Authorization", "Bearer $AUTH_TOKEN")
+                    .build(),
+            )
+        }
+    }
+
+    @Singleton
+    @Provides
     fun provideClient(
+        authInterceptor: Interceptor,
         httpLoggingInterceptor: HttpLoggingInterceptor,
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
+            .addInterceptor(authInterceptor)
             .addInterceptor(httpLoggingInterceptor)
             .connectTimeout(
                 TIME_OUT_POLICY,
@@ -71,8 +88,8 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGitHubRepoService(retrofit: Retrofit): RepoService {
-        return retrofit.create(RepoService::class.java)
+    fun provideSearchService(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
     }
 
     @Singleton
