@@ -1,5 +1,6 @@
 package com.example.presentation.home
 
+import android.widget.Toast
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -110,8 +111,12 @@ fun SuccessContent(modifier: Modifier = Modifier, searchResult: List<UserInfoMod
     LazyColumn(modifier = modifier) {
         items(searchResult) {
             UserRowItem(modifier = Modifier.fillMaxWidth(), item = it, onItemClick = {
-                DetailActivity.getIntent(context, it).also { intent ->
-                    context.startActivity(intent)
+                if (it.followerList.isEmpty()) {
+                    Toast.makeText(context, "팔로워가 없습니다", Toast.LENGTH_SHORT).show()
+                } else {
+                    DetailActivity.getIntent(context, it).also { intent ->
+                        context.startActivity(intent)
+                    }
                 }
             })
 
