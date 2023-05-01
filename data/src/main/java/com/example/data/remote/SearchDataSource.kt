@@ -6,9 +6,9 @@ import javax.inject.Inject
 class SearchDataSource @Inject constructor(
     private val service: SearchService,
 ) {
-    suspend fun getSearchList(userName: String): List<SearchResponse> {
+    suspend fun searchUsers(userName: String): SearchResponse? {
         return runCatching {
-            service.getSearch(userName)
-        }.getOrDefault(emptyList())
+            service.searchUsers(userName = userName, perPage = 15, page = 1)
+        }.getOrNull()
     }
 }

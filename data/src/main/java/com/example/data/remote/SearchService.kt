@@ -12,5 +12,7 @@ interface SearchService {
     suspend fun searchUsers(
         @Header("Authorization") token: String = "token ${BuildConfig.GITHUB_TOKEN}",
         @Query("q") userName: String,
+        @Query("per_page") perPage: Int,
+        @Query("page") page: Int,
     ): SearchResponse
 }

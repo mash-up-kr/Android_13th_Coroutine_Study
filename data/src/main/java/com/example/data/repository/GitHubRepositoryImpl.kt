@@ -15,19 +15,19 @@ class GitHubRepositoryImpl @Inject constructor(
     override suspend fun getFollowers(userName: String): List<User> {
         return followerDataSource.getFollowers(userName).map { followerResponse ->
             User(
-                login = followerResponse.login!!,
-                avatarUrl = followerResponse.avatarUrl!!,
-                url = followerResponse.url!!
+                login = followerResponse.login ?: "",
+                avatarUrl = followerResponse.avatarUrl ?: "",
+                url = followerResponse.url ?: "",
             )
         }
     }
 
     override suspend fun searchUsers(userName: String): List<User> {
-        return searchDataSource.searchUsers(userName)?.items?.map { searchResponse ->
+        return searchDataSource.searchUsers(userName)?.items?.map { item ->
             User(
-                login = searchResponse.login,
-                avatarUrl = searchResponse.avatar_url,
-                url = searchResponse.url
+                login = item.login ?: "",
+                avatarUrl = item.avatarUrl ?: "",
+                url = item.url ?: "",
             )
         } ?: emptyList()
     }
@@ -35,10 +35,10 @@ class GitHubRepositoryImpl @Inject constructor(
     override suspend fun getUser(userName: String): User {
         return userDataSource.getUser(userName).let { userResponse ->
             User(
-                login = userResponse?.login!!,
-                avatarUrl = userResponse?.avatarUrl!!,
-                url = userResponse?.url!!,
-                followerCount = userResponse?.followers ?: 0
+                login = userResponse?.login ?: "",
+                avatarUrl = userResponse?.avatarUrl ?: "",
+                url = userResponse?.url ?: "",
+                followerCount = userResponse?.followers ?: 0,
             )
         }
     }

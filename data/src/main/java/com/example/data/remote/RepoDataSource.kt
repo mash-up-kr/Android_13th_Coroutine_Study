@@ -8,7 +8,7 @@ class RepoDataSource @Inject constructor(
 ) {
     suspend fun getGitHubRepoList(userName: String): List<GitHubRepoResponse> {
         return runCatching {
-            service.getGitHubRepo(userName)
+            service.getGitHubRepo(userName = userName)
         }.getOrDefault(emptyList())
     }
 }

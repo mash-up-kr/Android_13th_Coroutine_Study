@@ -1,6 +1,5 @@
 package com.example.presentation.ui.components
 
-import androidx.annotation.StringRes
 import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.CircleShape
@@ -10,7 +9,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
@@ -22,16 +20,16 @@ import com.example.presentation.ui.theme.BasePurple
 @Composable
 fun GradientProfileImage(
     modifier: Modifier = Modifier,
-    @StringRes userName: Int,
-    @StringRes imageUrl: Int,
+    userName: String,
+    imageUrl: String,
     size: Dp,
     borderWidth: Dp = 2.dp,
     startColor: Color = BasePurple,
     endColor: Color = BasePink,
 ) {
     GlideImage(
-        model = stringResource(id = imageUrl),
-        contentDescription = stringResource(id = userName),
+        model = imageUrl,
+        contentDescription = userName,
         contentScale = ContentScale.Fit,
         modifier = modifier
             .size(size)
