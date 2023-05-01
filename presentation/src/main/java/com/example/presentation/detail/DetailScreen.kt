@@ -24,7 +24,7 @@ fun DetailScreen(userInfoModel: UserInfoModel?) {
         )
     } else {
         DetailInfoContent(
-            modifier = Modifier,
+            modifier = Modifier.fillMaxWidth(),
             userInfo = userInfoModel,
         )
     }
@@ -33,13 +33,14 @@ fun DetailScreen(userInfoModel: UserInfoModel?) {
 @Composable
 fun DetailInfoContent(modifier: Modifier = Modifier, userInfo: UserInfoModel) {
     Column(modifier = modifier, horizontalAlignment = Alignment.CenterHorizontally) {
-        Text(text = "상세 정보", modifier = Modifier.padding(8.dp), textAlign = TextAlign.Center)
+        Text(text = "상세 정보", modifier = Modifier.fillMaxWidth().padding(8.dp))
         CircleProfile(
             userName = userInfo.userInfo.name,
             imageUrl = userInfo.userInfo.profileImageUrl
         )
 
-        LazyColumn {
+        Text(text = "팔로워 리스트", modifier = Modifier.fillMaxWidth().padding(8.dp))
+        LazyColumn(modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp)) {
             items(userInfo.followerList) {
                 FollowerItem(modifier = Modifier.fillMaxWidth(), user = it)
             }
