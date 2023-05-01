@@ -20,13 +20,12 @@ import com.bumptech.glide.integration.compose.GlideImage
 
 @OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun UserImage(imageUrl: String, userName: String) {
+fun UserImage(imageUrl: String, userName: String, modifier: Modifier = Modifier.size(96.dp)) {
     GlideImage(
         model = imageUrl,
         contentDescription = userName,
         contentScale = ContentScale.Fit,
-        modifier = Modifier
-            .size(96.dp)
+        modifier = modifier
             .clip(CircleShape)
             .border(
                 width = 1.dp, brush = Brush.verticalGradient(
