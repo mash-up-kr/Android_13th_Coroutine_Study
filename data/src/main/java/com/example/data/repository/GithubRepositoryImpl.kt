@@ -15,7 +15,8 @@ class GithubRepositoryImpl @Inject constructor(
     private val mapper: GithubMapper,
 ) : GithubRepository {
     override suspend fun searchUsers(keyword: String): List<User> {
-        return searchDataSource.searchUsers(keyword)?.items?.map {
+        val result = searchDataSource.searchUsers(keyword)?.items
+        return result?.subList(0, if (result.size > 10) 10 else result.size)?.map {
             mapper.mapToEntity(it)
         } ?: emptyList()
     }
