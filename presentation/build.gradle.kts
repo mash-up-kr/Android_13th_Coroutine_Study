@@ -59,6 +59,9 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso)
+    implementation(libs.androidx.navigation.compose)
+    implementation(libs.androidx.hilt)
+    implementation(platform("org.jetbrains.kotlin:kotlin-bom:1.8.0"))
 
     // hilt
     implementation(libs.hilt.android)

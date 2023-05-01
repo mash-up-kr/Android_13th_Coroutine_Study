@@ -4,6 +4,7 @@ import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
 import com.example.data.remote.FollowerService
 import com.example.data.remote.RepoService
+import com.example.data.remote.SearchService
 import com.example.data.remote.UserService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
@@ -85,5 +86,11 @@ object NetworkModule {
     @Provides
     fun provideFollowerService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    @Singleton
+    @Provides
+    fun provideSearchService(retrofit: Retrofit): SearchService {
+        return retrofit.create(SearchService::class.java)
     }
 }
