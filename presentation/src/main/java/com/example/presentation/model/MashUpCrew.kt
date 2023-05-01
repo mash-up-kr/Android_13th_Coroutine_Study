@@ -20,5 +20,6 @@ enum class MashUpCrew(
     DAYEON(R.string.dayeon, R.string.dayeon_url),
     HYUNSOO(R.string.hyunsoo, R.string.hyunsoo_url),
     JAEHUN(R.string.jaehun, R.string.jaehun_url),
-    HYEJIN(R.string.hyejin, R.string.hyejin_url)
+    HYEJIN(R.string.hyejin, R.string.hyejin_url);
+
 }

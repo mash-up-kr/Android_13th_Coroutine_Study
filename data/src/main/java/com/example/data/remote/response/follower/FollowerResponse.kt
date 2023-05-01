@@ -1,5 +1,6 @@
 package com.example.data.remote.response.follower
 
+import com.example.domain.model.Follower
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 
@@ -41,4 +42,10 @@ data class FollowerResponse(
     val type: String?,
     @Json(name = "url")
     val url: String?,
-)
+) {
+    fun toDomain(): Follower = Follower(
+        name = login ?: "",
+        htmlUrl = htmlUrl ?: "",
+        imageUrl = avatarUrl ?: ""
+    )
+}

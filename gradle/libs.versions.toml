@@ -55,7 +55,7 @@ java-inject = { group = "javax.inject", name = "javax.inject", version.ref = "ja
 
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide-compose" }
 glide-view = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide-view" }
-glide-compiler = { group = "com.github.bumptech.glide", name = "copmiler", version.ref = "glide-view" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide-view" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
