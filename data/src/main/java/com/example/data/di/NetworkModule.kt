@@ -8,16 +8,21 @@ import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.moshi.MoshiConverterFactory
 import java.util.concurrent.TimeUnit
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
 internal class NetworkModule {
+
+    @Inject
+    lateinit var authInterceptor: Interceptor
 
     @Singleton
     @Provides
@@ -37,15 +42,11 @@ internal class NetworkModule {
         }
     }
 
-    @Singleton
-    @Provides
-    fun provideAuthInterceptor(): AuthInterceptor = AuthInterceptor()
 
     @Singleton
     @Provides
     fun provideClient(
         httpLoggingInterceptor: HttpLoggingInterceptor,
-        authInterceptor: AuthInterceptor
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
