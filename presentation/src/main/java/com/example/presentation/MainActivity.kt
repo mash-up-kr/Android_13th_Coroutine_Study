@@ -1,32 +1,132 @@
 package com.example.presentation
 
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.runtime.Composable
-import com.example.presentation.home.HomeScreen
-import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
+import android.widget.ImageView
+import android.widget.Toast
+import androidx.activity.viewModels
+import androidx.appcompat.app.AppCompatActivity
+import androidx.core.view.isVisible
+import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
+import com.bumptech.glide.Glide
+import com.example.presentation.adapter.FollowerListAdapter
+import com.example.presentation.adapter.SearchListAdapter
+import com.example.presentation.databinding.ActivityMainBinding
+import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import model.SearchModel
 
-/**
- * CoroutineStudy
- * @author jaesung
- * @created 2023/04/10
- */
-class MainActivity : ComponentActivity() {
+@AndroidEntryPoint
+class MainActivity : AppCompatActivity() {
+
+    private val binding: ActivityMainBinding by lazy {
+        ActivityMainBinding.inflate(layoutInflater)
+    }
+
+    private val mainViewModel: MainViewModel by viewModels()
+
+    private val searchAdapter: SearchListAdapter by lazy {
+        SearchListAdapter(itemClickListener = { searchModel ->
+            onSearchItemClick(searchModel)
+        })
+    }
+    private val followerAdapter: FollowerListAdapter by lazy {
+        FollowerListAdapter(
+            gitHubLinkClickListener = { link ->
+                onGitHubLinkClick(link)
+            }
+        )
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContent {
-            MashUpCoroutineStudyApp()
+        setContentView(binding.root)
+        initView()
+        collectUiModel()
+    }
+
+    private fun initView() {
+        binding.apply {
+            rvSearchList.adapter = searchAdapter
+            rvFollowList.adapter = followerAdapter
+            etSearch.doOnTextChanged { text, _, _, _ -> mainViewModel.setQuery(text.toString()) }
+            btnSearch.setOnClickListener {
+                if (mainViewModel.getSearchQuery().isNotBlank()) {
+                    mainViewModel.searchUser(etSearch.text.toString())
+                }
+            }
         }
     }
-}
 
-@Composable
-fun MashUpCoroutineStudyApp() {
-    MashUpCoroutineStudyTheme {
-        HomeScreen()
+    private fun collectUiModel() {
+        lifecycleScope.launch {
+            lifecycle.repeatOnLifecycle(Lifecycle.State.STARTED) {
+                mainViewModel.uiState.collect { state ->
+                    with(binding) {
+                        setLoadingVisibility(state)
+                        when (state) {
+                            is UiState.Success -> {
+                                searchAdapter.submitList(state.model.list)
+                                groupSelected.isVisible = state.model.isSelected
+                                showSelecteedItem(state.model.isSelected, state.model.selectedData)
+                            }
+
+                            is UiState.Fail -> {
+                                Toast.makeText(this@MainActivity, state.error, Toast.LENGTH_SHORT).show()
+                            }
+
+                            else -> {
+                                Unit
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private fun showSelecteedItem(isSelected: Boolean, model: SearchModel) {
+        if (isSelected) {
+            with(binding) {
+                ivSelectedUser.setImageUrl(model.avatarUrl)
+                tvSelectedUser.text = model.name
+                tvFollowerCount.text = "팔로워 수: ${model.followerCount}"
+                tvFollowingCount.text = "팔로잉 수: ${model.followingCount}"
+                followerAdapter.submitList(model.followers)
+            }
+        }
+    }
+
+    private fun setLoadingVisibility(state: UiState) {
+        with(binding) {
+            if (state is UiState.Loading) {
+                btnSearch.isVisible = false
+                pbSearch.isVisible = true
+            } else {
+                btnSearch.isVisible = true
+                pbSearch.isVisible = false
+            }
+        }
+    }
+
+
+    private fun onSearchItemClick(item: SearchModel) {
+        mainViewModel.selectItem(item)
+    }
+
+    private fun onGitHubLinkClick(link: String) {
+        val intent = Intent(Intent.ACTION_VIEW).apply {
+            data = Uri.parse(link)
+        }
+        startActivity(intent)
     }
 }
 
-
+fun ImageView.setImageUrl(url: String) {
+    Glide.with(this).load(url).circleCrop().into(this)
+}
 

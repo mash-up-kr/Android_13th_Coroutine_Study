@@ -1,10 +1,9 @@
 package com.example.data.di
 
+import com.example.data.AuthInterceptor
 import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
-import com.example.data.remote.FollowerService
-import com.example.data.remote.RepoService
-import com.example.data.remote.UserService
+import com.example.data.remote.service.GitHubApiService
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
 import dagger.Module
@@ -20,7 +19,7 @@ import javax.inject.Singleton
 
 @InstallIn(SingletonComponent::class)
 @Module
-object NetworkModule {
+class NetworkModule {
 
     @Singleton
     @Provides
@@ -47,7 +46,8 @@ object NetworkModule {
     ): OkHttpClient {
         return OkHttpClient
             .Builder()
-            .addInterceptor(httpLoggingInterceptor)
+            .addNetworkInterceptor(httpLoggingInterceptor)
+            .addInterceptor(AuthInterceptor())
             .connectTimeout(
                 TIME_OUT_POLICY,
                 TimeUnit.MILLISECONDS,
@@ -71,19 +71,6 @@ object NetworkModule {
 
     @Singleton
     @Provides
-    fun provideGitHubRepoService(retrofit: Retrofit): RepoService {
-        return retrofit.create(RepoService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideUserService(retrofit: Retrofit): FollowerService {
-        return retrofit.create(FollowerService::class.java)
-    }
-
-    @Singleton
-    @Provides
-    fun provideFollowerService(retrofit: Retrofit): UserService {
-        return retrofit.create(UserService::class.java)
-    }
+    fun provideGitHubService(retrofit: Retrofit): GitHubApiService =
+        retrofit.create(GitHubApiService::class.java)
 }
