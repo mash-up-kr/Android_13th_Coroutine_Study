@@ -9,6 +9,7 @@ import com.example.data.remote.UserDataSource
 import com.example.data.remote.response.user.UserResponse
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.emptyFlow
 import kotlinx.coroutines.flow.flow
 import model.UserInfoResponse
 import repository.UserWithFollowerInfoRepository
@@ -21,11 +22,11 @@ class SearchUserInfoRepositoryImpl @Inject constructor(
     private val mapper: FollowerInfoMapper
 ): UserWithFollowerInfoRepository {
 
-    override suspend fun getUserWithFollowerInfo(query: String): Flow<List<UserInfoResponse>>? {
+    override suspend fun getUserWithFollowerInfo(query: String): Flow<List<UserInfoResponse>> {
         return getSearchList(query)
     }
 
-    private suspend fun getSearchList(query: String): Flow<List<UserInfoResponse>>? {
+    private suspend fun getSearchList(query: String): Flow<List<UserInfoResponse>> {
         when(val response = searchDataSource.getSearchList(query)) {
             is NetworkResult.Success -> {
                 val items = response.data.items
@@ -36,10 +37,10 @@ class SearchUserInfoRepositoryImpl @Inject constructor(
             }
             is NetworkResult.Error -> {}
         }
-        return null
+        return emptyFlow()
     }
 
-    private suspend fun getCombineUserInfoWithFollower(items: List<UserResponse>): Flow<List<UserInfoResponse>> {
+    private fun getCombineUserInfoWithFollower(items: List<UserResponse>): Flow<List<UserInfoResponse>> {
         return flow {
             val userResponses = mutableListOf<UserInfoResponse>()
             items.forEach { item ->

@@ -8,7 +8,7 @@ import javax.inject.Inject
 class GetUserWithFollowerInfoUseCase @Inject constructor(
     private val userWithFollowerInfoRepository: UserWithFollowerInfoRepository
 ) {
-    suspend operator fun invoke(query: String): Flow<List<UserInfoResponse>>? {
+    suspend operator fun invoke(query: String): Flow<List<UserInfoResponse>> {
         return userWithFollowerInfoRepository.getUserWithFollowerInfo(query)
     }
 }
