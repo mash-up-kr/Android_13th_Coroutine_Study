@@ -3,15 +3,12 @@ package com.example.data.repository
 import ResultWrapper
 import com.example.data.remote.datasource.GitHubDataSource
 import com.example.data.remote.response.search.Item
-import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.FlowCollector
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.flatMapMerge
-import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flatMapConcat
 import model.SearchModel
 import repository.GitHubRepository
 import javax.inject.Inject
@@ -24,7 +21,7 @@ class GitHubRepositoryImpl @Inject constructor(
     override fun getSearchModel(query: String): Flow<ResultWrapper<Any, Any>> = channelFlow {
         gitHubDataSource.searchUsers(query).catch { e ->
             send(ResultWrapper.Fail("SearchError[searchUsers]: $e"))
-        }.flatMapMerge { searchUserResponse ->
+        }.flatMapConcat { searchUserResponse ->
             combineSearchList(searchUserResponse.items ?: emptyList())
         }.collect {
             send(it)
