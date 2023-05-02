@@ -3,12 +3,14 @@ package com.example.data.repository
 import ResultWrapper
 import com.example.data.remote.datasource.GitHubDataSource
 import com.example.data.remote.response.search.Item
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.FlowPreview
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.channelFlow
 import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.flatMapConcat
+import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.flowOn
 import model.SearchModel
 import repository.GitHubRepository
 import javax.inject.Inject
@@ -18,24 +20,24 @@ class GitHubRepositoryImpl @Inject constructor(
 ) : GitHubRepository {
 
     @OptIn(FlowPreview::class)
-    override fun getSearchModel(query: String): Flow<ResultWrapper<Any, Any>> = channelFlow {
+    override fun getSearchModel(query: String): Flow<ResultWrapper<Any, Any>> = flow {
         gitHubDataSource.searchUsers(query).catch { e ->
-            send(ResultWrapper.Fail("SearchError[searchUsers]: $e"))
+            emit(ResultWrapper.Fail("SearchError[searchUsers]: $e"))
         }.flatMapConcat { searchUserResponse ->
             combineSearchList(searchUserResponse.items ?: emptyList())
         }.collect {
-            send(it)
+            emit(it)
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
-    private fun combineSearchList(list: List<Item>) = channelFlow {
+    private fun combineSearchList(list: List<Item>) = flow {
         val count = list.size
         val fetchedList = mutableListOf<SearchModel>()
         list.forEach { user ->
             gitHubDataSource.run {
                 getFollowers(user.login ?: DEFAULT_STRING)
                     .catch { e ->
-                        send(ResultWrapper.Fail("CombineError[getFollowers]: $e"))
+                        emit(ResultWrapper.Fail("CombineError[getFollowers]: $e"))
                     }.combine(getUser(user.login ?: DEFAULT_STRING)) { follower, userInfo ->
                         SearchModel(
                             name = userInfo.login ?: DEFAULT_STRING,
@@ -51,18 +53,18 @@ class GitHubRepositoryImpl @Inject constructor(
                             }
                         )
                     }.catch { e ->
-                        send(ResultWrapper.Fail("CombineError[getUser]: $e"))
+                        emit(ResultWrapper.Fail("CombineError[getUser]: $e"))
                     }.collect { model ->
                         with(fetchedList) {
                             add(model)
                             if (size == count) {
-                                send(ResultWrapper.Success(fetchedList))
+                                emit(ResultWrapper.Success(fetchedList))
                             }
                         }
                     }
             }
         }
-    }
+    }.flowOn(Dispatchers.IO)
 
     companion object {
         const val DEFAULT_STRING = ""

@@ -63,14 +63,13 @@ class MainViewModel @Inject constructor(
     fun searchUser(query: String) {
         if (lastQuery == query) {
             return
-        } else {
-            lastQuery = query
-            isLoading.value = true
-            viewModelScope.launch {
-                getSearchModelUseCase(query).collect { result ->
-                    searchResult.value = result
-                    isLoading.value = false
-                }
+        }
+        lastQuery = query
+        isLoading.value = true
+        viewModelScope.launch {
+            getSearchModelUseCase(query).collect { result ->
+                searchResult.value = result
+                isLoading.value = false
             }
         }
     }
