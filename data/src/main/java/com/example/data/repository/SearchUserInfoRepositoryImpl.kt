@@ -26,19 +26,21 @@ class SearchUserInfoRepositoryImpl @Inject constructor(
         return getSearchList(query)
     }
 
-    private suspend fun getSearchList(query: String): Flow<List<UserInfoResponse>> {
-        when(val response = searchDataSource.getSearchList(query)) {
+    private suspend fun getSearchList(query: String): Flow<List<UserInfoResponse>>
+        = when(val response = searchDataSource.getSearchList(query)) {
             is NetworkResult.Success -> {
                 val items = response.data.items
-                return getCombineUserInfoWithFollower(items)
+                getCombineUserInfoWithFollower(items)
             }
             is NetworkResult.Failure -> {
                 Log.d("network_fail", response.message)
+                emptyFlow()
             }
-            is NetworkResult.Error -> {}
+            is NetworkResult.Error -> {
+                emptyFlow()
+            }
         }
-        return emptyFlow()
-    }
+
 
     private fun getCombineUserInfoWithFollower(items: List<UserResponse>): Flow<List<UserInfoResponse>> {
         return flow {
