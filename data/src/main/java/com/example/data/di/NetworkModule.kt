@@ -19,11 +19,6 @@ import javax.inject.Singleton
 @Module
 internal class NetworkModule {
 
-    companion object {
-        private const val BASE_URL = "https://api.github.com"
-        private const val TIME_OUT_POLICY = 10_000L
-    }
-
     @Singleton
     @Provides
     fun provideMoshi(): Moshi {
@@ -81,5 +76,10 @@ internal class NetworkModule {
     @Provides
     fun provideUserService(retrofit: Retrofit): UserService {
         return retrofit.create(UserService::class.java)
+    }
+
+    companion object {
+        private const val BASE_URL = "https://api.github.com"
+        private const val TIME_OUT_POLICY = 10_000L
     }
 }
