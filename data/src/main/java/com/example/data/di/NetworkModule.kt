@@ -36,7 +36,6 @@ object NetworkModule {
     @Singleton
     @Provides
     fun provideInterceptor(): HttpLoggingInterceptor {
-        // 릴리즈 안할 거니깐 귀찮아서 그냥 열어 뒀습니다 ^_^
         return HttpLoggingInterceptor().apply {
             level = HttpLoggingInterceptor.Level.BODY
         }
