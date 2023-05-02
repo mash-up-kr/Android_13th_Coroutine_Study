@@ -6,19 +6,19 @@ plugins {
 }
 
 android {
-    namespace =  "com.example.presentation"
-    compileSdk =  33
+    namespace = "com.example.presentation"
+    compileSdk = 33
 
     defaultConfig {
-        minSdk  = 24
-        targetSdk =  33
+        minSdk = 24
+        targetSdk = 33
 
-        testInstrumentationRunner =  "androidx.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     buildTypes {
         release {
-            isMinifyEnabled  = false
+            isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro",
@@ -26,8 +26,8 @@ android {
         }
     }
     compileOptions {
-        sourceCompatibility  =   JavaVersion.VERSION_1_8
-        targetCompatibility  =  JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
     kotlinOptions {
         jvmTarget = "1.8"
@@ -35,8 +35,6 @@ android {
 
     buildFeatures {
         compose = true
-        viewBinding = true
-        dataBinding = true
     }
     composeOptions {
         kotlinCompilerExtensionVersion = "1.3.2"
@@ -50,12 +48,13 @@ dependencies {
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.compose.bom)
+    implementation(libs.lifecycle.compose.viewmodel)
     implementation(libs.activity.compose)
     implementation(libs.ui.tooling.preview)
     debugImplementation(libs.ui.tooling)
     implementation(libs.foundation)
+    implementation(libs.hilt.viewmodel)
     implementation(libs.glide.compose)  // Compose 용
-    implementation(libs.glide.view)  // View System 용
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso)
@@ -63,5 +62,4 @@ dependencies {
     // hilt
     implementation(libs.hilt.android)
     kapt(libs.hilt.compiler)
-    kapt(libs.glide.compiler)
 }

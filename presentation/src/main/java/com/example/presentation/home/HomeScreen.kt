@@ -1,107 +1,126 @@
 package com.example.presentation.home
 
-import androidx.annotation.StringRes
-import androidx.compose.foundation.border
+import android.widget.Toast
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.paddingFromBaseline
-import androidx.compose.foundation.layout.size
-import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
-import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.material.CircularProgressIndicator
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.Surface
 import androidx.compose.material.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Brush
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
-import com.bumptech.glide.integration.compose.ExperimentalGlideComposeApi
-import com.bumptech.glide.integration.compose.GlideImage
-import com.example.presentation.R
-import com.example.presentation.model.MashUpCrew
-import com.example.presentation.ui.theme.MashUpCoroutineStudyTheme
+import androidx.hilt.navigation.compose.hiltViewModel
+import com.example.presentation.MainViewModel
+import com.example.presentation.SearchUiState
+import com.example.presentation.UiState
+import com.example.presentation.common.MashUpDivider
 
 /**
  * CoroutineStudy
  * @author jaesung
  * @created 2023/04/10
  */
-
-/**
- * @author 재성
- * XML로 하실 분은 띠용하지 마시고 가볍게 삭제하시길
- * Compose로 하실 분들은 띠용하시고 이어서 작성하셔도 됩니당
- */
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
-    val studyCrewList = MashUpCrew.values().toList()
-    Column(modifier = modifier.padding(8.dp)) {
-        StudyCrewList(studyCrewList = studyCrewList, modifier = Modifier)
+fun Home(
+    modifier: Modifier = Modifier,
+    viewModel: MainViewModel = hiltViewModel(),
+) {
+    val searchResult: UiState by viewModel.searchResult.collectAsState()
+    val loading: Boolean by viewModel.loadingFlow.collectAsState()
 
-    }
+    HomeScreen(
+        loading = loading,
+        searchResult = searchResult,
+        onSearchIconClick = viewModel::searchUser
+    )
 }
 
 @Composable
-fun StudyCrewList(
-    studyCrewList: List<MashUpCrew>,
-    modifier: Modifier = Modifier
+private fun HomeScreen(
+    loading: Boolean,
+    searchResult: UiState,
+    onSearchIconClick: (String) -> Unit,
+    modifier: Modifier = Modifier,
 ) {
-    LazyRow(modifier = modifier) {
-        items(studyCrewList) {
-            StudyCrew(userName = it.userName, imageUrl = it.profileImage, modifier = modifier)
+    if (loading) {
+        LoadingProgressBar()
+    } else {
+        Column(modifier = modifier) {
+            SearchBar(onSearch = { onSearchIconClick(it) })
+
+            when (searchResult) {
+                is UiState.Initial -> {}
+                is UiState.Success -> SearchResultContent(searchResult = searchResult.uiState)
+                is UiState.Error ->
+                    Toast.makeText(LocalContext.current, "삐용삐용", Toast.LENGTH_SHORT).show()
+            }
         }
     }
 }
 
-@OptIn(ExperimentalGlideComposeApi::class)
 @Composable
-fun StudyCrew(
-    @StringRes userName: Int,
-    @StringRes imageUrl: Int,
-    modifier: Modifier = Modifier
-) {
+fun LoadingProgressBar() {
     Column(
+        modifier = Modifier.fillMaxSize(),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier.padding(8.dp)
+        verticalArrangement = Arrangement.Center
     ) {
-        GlideImage(
-            model = stringResource(id = imageUrl),
-            contentDescription = stringResource(id = userName),
-            contentScale = ContentScale.Fit,
-            modifier = Modifier
-                .size(96.dp)
-                .clip(CircleShape)
-                .border(
-                    width = 1.dp,
-                    brush = Brush.verticalGradient(
-                        colors = listOf(Color.Blue, Color.Gray)
-                    ),
-                    shape = CircleShape
-                )
+        CircularProgressIndicator(
+            modifier = Modifier.padding(16.dp),
+            color = MaterialTheme.colors.primary
         )
-
-        Text(
-            text = stringResource(id = userName),
-            style = MaterialTheme.typography.body2,
-            maxLines = 1,
-            modifier = Modifier.paddingFromBaseline(top = 24.dp)
-        )
+        Text(text = "Loading...")
     }
 }
 
-@Preview
 @Composable
-fun StudyCrewPreview() {
-    MashUpCoroutineStudyTheme {
-        Surface {
-            StudyCrew(R.string.jaesung, R.string.jaesung_url)
+fun SearchResultContent(
+    modifier: Modifier = Modifier,
+    searchResult: List<SearchUiState>,
+) {
+    var selectedUserIndex by rememberSaveable {
+        mutableStateOf(0)
+    }
+    UserList(userList = searchResult, onUserClick = { selectedUserIndex = it })
+    MashUpDivider()
+
+    if (selectedUserIndex != -1) {
+        UserInfoContent(user = searchResult[selectedUserIndex])
+    }
+}
+
+@Composable
+fun UserInfoContent(
+    user: SearchUiState,
+    modifier: Modifier = Modifier,
+) {
+    LazyColumn(modifier = modifier) {
+        item {
+            UserInfo(
+                modifier = Modifier.padding(16.dp),
+                imageUrl = user.avatarUrl,
+                userName = user.userName,
+                blogUrl = user.blogUrl,
+                repoCount = user.publicRepositoryCount
+            )
+        }
+        item {
+            FollowerHeader(modifier = Modifier, followers = user.followerCount)
+        }
+        items(user.followers) {
+            FollowerContent(
+                modifier = Modifier.padding(8.dp),
+                imageUrl = it.avatarUrl,
+                userName = it.userName
+            )
+            MashUpDivider()
         }
     }
 }
