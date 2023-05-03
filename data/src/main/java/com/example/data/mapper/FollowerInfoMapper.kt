@@ -4,7 +4,7 @@ import com.example.data.remote.response.follower.FollowerResponse
 import model.FollowerInfoResponse
 import javax.inject.Inject
 
-class FollowerInfoMapper: EntityMapper<FollowerInfoResponse, FollowerResponse> {
+class FollowerInfoMapper @Inject constructor(): EntityMapper<FollowerInfoResponse, FollowerResponse> {
     override fun mapToDomain(entity: FollowerResponse): FollowerInfoResponse {
        return FollowerInfoResponse(
            avatarUrl = entity.avatarUrl,
