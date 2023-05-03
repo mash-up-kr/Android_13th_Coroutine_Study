@@ -72,21 +72,18 @@ class MainActivity : AppCompatActivity() {
             root.hideKeyboard()
         }
 
-        adapter.setSearchItemClickListener(object: SearchAdapter.OnItemClickListener{
-            override fun onItemDetailClick(followerList: List<FollowerInfoResponse>) {
-                if(followerList.isNotEmpty()) {
-                    val intent = Intent(this@MainActivity, FollowerDetailActivity::class.java)
-                    intent.putExtra("followerList", followerList as ArrayList<FollowerInfoResponse>)
-                    startActivity(intent)
-                } else {
-                    Toast.makeText(applicationContext,
-                        getString(R.string.not_followers),
-                        Toast.LENGTH_SHORT)
-                        .show()
-                }
+        adapter.onItemClickListener = { followerList ->
+            if(followerList.isNotEmpty()) {
+                val intent = Intent(this@MainActivity, FollowerDetailActivity::class.java)
+                intent.putExtra("followerList", followerList as ArrayList<FollowerInfoResponse>)
+                startActivity(intent)
+            } else {
+                Toast.makeText(applicationContext,
+                    getString(R.string.not_followers),
+                    Toast.LENGTH_SHORT)
+                    .show()
             }
-
-        })
+        }
     }
 
 }

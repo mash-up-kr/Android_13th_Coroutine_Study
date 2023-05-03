@@ -40,11 +40,9 @@ class FollowerDetailActivity : AppCompatActivity() {
     }
 
     private fun setOnClickListener() {
-        adapter.followerItemClickListener(object: FollowerDetailAdapter.OnItemClickListener{
-            override fun gitUrlClickListener(githubUrl: String) {
-                val intent = Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl))
-                startActivity(intent)
-            }
-        })
+        adapter.onItemClickListener = { githubUrl ->
+            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(githubUrl))
+            startActivity(intent)
+        }
     }
 }

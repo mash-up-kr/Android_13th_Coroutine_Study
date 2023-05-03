@@ -10,15 +10,9 @@ import com.example.presentation.databinding.ItemFollowerUserBinding
 import model.FollowerInfoResponse
 
 
-class FollowerDetailAdapter: ListAdapter<FollowerInfoResponse, FollowerDetailAdapter.ViewHolder>(
-    diffUtil
-) {
+class FollowerDetailAdapter: ListAdapter<FollowerInfoResponse, FollowerDetailAdapter.ViewHolder>(diffUtil) {
 
-    private lateinit var onItemClickListener: OnItemClickListener
-
-    fun followerItemClickListener(listener: OnItemClickListener){
-        this.onItemClickListener = listener
-    }
+    var onItemClickListener : ((String)->Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -39,7 +33,7 @@ class FollowerDetailAdapter: ListAdapter<FollowerInfoResponse, FollowerDetailAda
         fun bind(item: FollowerInfoResponse) = with(binding){
             userName.text = item.login
             binding.githubUrl.setOnClickListener {
-                item.htmlUrl?.let { url -> onItemClickListener.gitUrlClickListener(url) }
+                item.htmlUrl?.let { url -> onItemClickListener?.invoke(url)}
             }
 
             Glide.with(root)

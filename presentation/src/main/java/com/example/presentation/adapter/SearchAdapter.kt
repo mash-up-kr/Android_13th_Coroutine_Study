@@ -14,11 +14,7 @@ import model.UserInfoResponse
 
 class SearchAdapter: ListAdapter<UserInfoResponse, SearchAdapter.ViewHolder>(diffUtil) {
 
-    private lateinit var onItemClickListener: OnItemClickListener
-
-    fun setSearchItemClickListener(listener: OnItemClickListener){
-        this.onItemClickListener = listener
-    }
+    var onItemClickListener : ((List<FollowerInfoResponse>)->Unit)? = null
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         return ViewHolder(
@@ -52,7 +48,7 @@ class SearchAdapter: ListAdapter<UserInfoResponse, SearchAdapter.ViewHolder>(dif
                 .into(userProfile)
 
             root.setOnClickListener {
-                onItemClickListener.onItemDetailClick(item.followerList)
+                onItemClickListener?.invoke(item.followerList)
             }
         }
     }
