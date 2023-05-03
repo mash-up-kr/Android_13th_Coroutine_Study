@@ -1,5 +1,6 @@
 package com.example.data.remote
 
+import com.example.data.remote.api.FollowerService
 import com.example.data.remote.response.follower.FollowerResponse
 import javax.inject.Inject
 
@@ -8,7 +9,7 @@ class FollowerDataSource @Inject constructor(
 ) {
     suspend fun getFollowers(userName: String): List<FollowerResponse> {
         return runCatching {
-            service.getFollowers(userName)
+            service.getFollowers(userName = userName)
         }.getOrDefault(emptyList())
     }
 }
