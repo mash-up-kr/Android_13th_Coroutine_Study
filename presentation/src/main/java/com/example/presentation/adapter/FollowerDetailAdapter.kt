@@ -51,18 +51,7 @@ class FollowerDetailAdapter: ListAdapter<FollowerInfoResponse, FollowerDetailAda
                 .asBitmap()
                 .load(item.avatarUrl)
                 .circleCrop()
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        userProfile.setImageBitmap(resource)
-                        userProfile.setBackgroundResource(R.drawable.bg_user_profile)
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
-
+                .into(userProfile)
         }
     }
 

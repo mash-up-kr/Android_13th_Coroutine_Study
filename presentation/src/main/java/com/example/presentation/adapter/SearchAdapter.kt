@@ -55,17 +55,7 @@ class SearchAdapter: ListAdapter<UserInfoResponse, SearchAdapter.ViewHolder>(dif
                 .asBitmap()
                 .load(item.avatarUrl)
                 .circleCrop()
-                .into(object : CustomTarget<Bitmap>() {
-                    override fun onResourceReady(
-                        resource: Bitmap,
-                        transition: Transition<in Bitmap>?
-                    ) {
-                        userProfile.setImageBitmap(resource)
-                        userProfile.setBackgroundResource(R.drawable.bg_user_profile)
-                    }
-
-                    override fun onLoadCleared(placeholder: Drawable?) {}
-                })
+                .into(userProfile)
 
             root.setOnClickListener {
                 onItemClickListener.onItemDetailClick(item.followerList)
