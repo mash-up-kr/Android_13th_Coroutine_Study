@@ -61,9 +61,9 @@
             android:text="@string/repository_count"
             android:textColor="@color/black"
             android:textSize="14sp"
-            app:layout_constraintBottom_toBottomOf="@+id/followers"
-            app:layout_constraintStart_toEndOf="@+id/followers"
-            app:layout_constraintTop_toTopOf="@+id/followers" />
+            app:layout_constraintBottom_toBottomOf="@id/followers"
+            app:layout_constraintStart_toEndOf="@id/followers"
+            app:layout_constraintTop_toTopOf="@id/followers" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
     <View
@@ -72,8 +72,8 @@
         android:layout_height="1dp"
         android:layout_marginTop="8dp"
         android:background="@color/grey"
-        app:layout_constraintEnd_toEndOf="@+id/constraintLayout"
-        app:layout_constraintStart_toStartOf="@+id/user_profile"
-        app:layout_constraintTop_toBottomOf="@+id/user_profile" />
+        app:layout_constraintEnd_toEndOf="@id/constraintLayout"
+        app:layout_constraintStart_toStartOf="@id/user_profile"
+        app:layout_constraintTop_toBottomOf="@id/user_profile" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
