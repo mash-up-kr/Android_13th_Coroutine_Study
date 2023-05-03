@@ -30,7 +30,7 @@ class FollowerDetailActivity : AppCompatActivity() {
     }
 
     private fun init() {
-        val followerList = intent.extras?.getSerializable("followerList") as List<FollowerInfoResponse>
+        val followerList = intent.intentSerializable("followerList", FollowerInfoResponse::class.java) as List<FollowerInfoResponse>
         adapter.submitList(followerList)
     }
 
