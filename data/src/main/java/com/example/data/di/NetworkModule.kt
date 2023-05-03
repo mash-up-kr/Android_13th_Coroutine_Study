@@ -1,5 +1,6 @@
 package com.example.data.di
 
+import com.example.data.BuildConfig
 import com.example.data.common.AUTHORIZATION
 import com.example.data.common.BASE_URL
 import com.example.data.common.TIME_OUT_POLICY
@@ -51,7 +52,7 @@ object NetworkModule {
             .addNetworkInterceptor(httpLoggingInterceptor)
             .addInterceptor((Interceptor { chain ->
                 val request = chain.request().newBuilder()
-                    .addHeader("Authorization", "token $AUTHORIZATION")
+                    .addHeader("Authorization", "token ${BuildConfig.GITHUB_TOKEN}")
                     .build()
 
                 chain.proceed(request)
