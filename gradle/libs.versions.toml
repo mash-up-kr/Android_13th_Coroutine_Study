@@ -24,6 +24,8 @@ coroutine = "1.6.4"
 java-inject = "1"
 
 workmanger = "1.0.0"
+com-google-android-material-material = "1.8.0"
+constraintlayout = "2.1.4"
 
 [libraries]
 
@@ -55,11 +57,13 @@ java-inject = { group = "javax.inject", name = "javax.inject", version.ref = "ja
 
 glide-compose = { group = "com.github.bumptech.glide", name = "compose", version.ref = "glide-compose" }
 glide-view = { group = "com.github.bumptech.glide", name = "glide", version.ref = "glide-view" }
-glide-compiler = { group = "com.github.bumptech.glide", name = "copmiler", version.ref = "glide-view" }
+glide-compiler = { group = "com.github.bumptech.glide", name = "compiler", version.ref = "glide-view" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 androidx-junit = { group = "androidx.test.ext", name = "junit", version.ref = "androidx-junit" }
 androidx-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "androidx-espresso-core" }
+com-google-android-material-material = { group = "com.google.android.material", name = "material", version.ref = "com-google-android-material-material" }
+constraintlayout = { group = "androidx.constraintlayout", name = "constraintlayout", version.ref = "constraintlayout" }
 
 [plugins]
 com-android-application = { id = "com.android.application", version.ref = "android-application" }

@@ -52,6 +52,8 @@ dependencies {
     implementation(libs.compose.bom)
     implementation(libs.activity.compose)
     implementation(libs.ui.tooling.preview)
+    implementation(libs.com.google.android.material.material)
+    implementation(libs.constraintlayout)
     debugImplementation(libs.ui.tooling)
     implementation(libs.foundation)
     implementation(libs.glide.compose)  // Compose 용
